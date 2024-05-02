@@ -1,0 +1,24 @@
+.main{
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+li{
+    list-style: none;
+}
+.leftDiv{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+.searchDiv{
+    width:40%;
+    display: flex;
+    justify-content: end;
+}
+.rightDiv{
+    width: 10%;
+    display: flex;
+    justify-content: end;
+
+}
