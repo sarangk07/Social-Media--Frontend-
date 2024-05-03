@@ -56,10 +56,8 @@ const handleSubmit = async (values, { resetForm }) => {
             toast.error("Bad Request. User Already Exist!")
           }
           else{
-            toast.error("error accured!")
+            toast.error("Error Accured!")
           }
-         
-          
         }
   }
 
