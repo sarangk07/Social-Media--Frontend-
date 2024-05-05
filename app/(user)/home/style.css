@@ -1,0 +1,79 @@
+body{
+    background-color: #E9E9E8;
+    color: rgb(95, 95, 95);
+}
+.recomentedDiv{
+    margin: 10px 10px 0px 0px;
+    border: 0px solid;
+    border-radius: 25px;
+    padding: 10px;
+    background-color: #ffffff;
+    color: black;
+}
+.usersDiv{
+    width: 100%;
+    background-color:#F6F7F6;
+    padding: 0px 20px 0px 20px ;
+    margin: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+}.profileImgDiv{
+    width: 30%;
+}
+.profilePic{
+    width: 70px;
+    height: 73px;
+}
+.followBTN{
+    width: 30%;
+    height: 50px;
+    border-radius: 30px;
+    background-color:#4A4A4A ;
+    color: white;
+}
+.username{
+    width: 40%;
+    overflow: hidden;
+}
+
+
+
+.feedDiv{
+    padding: 0px 20px 0px 20px ;
+    margin: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.headingFeedDiv{
+    
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+}
+
+
+
+
+.feedImgDiv{
+    background-color: #F6F6F6;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    border-radius: 10px;
+    
+    justify-items: center;
+}
+.feedimg{
+    width: 95%; /* Set a fixed width */
+    height: 480px; /* Set a fixed height */
+    object-fit: cover; /* Ensure the image covers the specified dimensions without stretching */
+    border-radius: 20px
+}
+
+/* {{login?<Link type='submit' href='home' className='bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded'>Continue</Link>:<button type='submit' className='bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded'>Login</button>}} */
