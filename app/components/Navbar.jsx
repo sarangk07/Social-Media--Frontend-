@@ -4,31 +4,44 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import './navStyle.css'
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function Navbar() {
     const[user,setUser]=useState(null)
 
-    useEffect(()=>{
-      const getUsers = async()=>{
-        const response = await fetch('https://social-media-5ukj.onrender.com/user/');
-        const allUsers = await response.json();
-        // console.log(allUsers,'nav  bar')
-        const localEmail = localStorage.getItem('email') ;
-        // console.log(localEmail,'localEmail')
-        allUsers.map((x)=>{
-            // console.log(x.email);
-            if(x.email === localEmail){
-              console.log('found')
-              console.log(x.username)
-              setUser(x)
-            }
-        })
-      console.log(user)
 
-        
-      }
-      getUsers()
-    },[])
+      useEffect(()=>{
+      
+        const getUsers = async()=>{
+          try{
+            const response = await fetch('https://social-media-5ukj.onrender.com/user/');
+            const allUsers = await response.json();
+
+            // console.log(allUsers,'nav  bar')
+          const localEmail = localStorage.getItem('email') ;
+          // console.log(localEmail,'localEmail')
+          allUsers.map((x)=>{
+              // console.log(x.email);
+              if(x.email === localEmail){
+                console.log('found')
+                console.log(x.username)
+                setUser(x)
+              }
+          })
+        console.log(user)
+          }
+          catch{
+            toast.error('network error')
+          }
+          
+          
+  
+          
+        }
+        getUsers()
+      },[])
+
+    
 
 
 
@@ -36,6 +49,7 @@ function Navbar() {
     const logOut = ()=>{
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    localStorage.removeItem('id');
   }
   return (
     <div className='main'>
