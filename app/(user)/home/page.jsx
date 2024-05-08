@@ -129,11 +129,28 @@ const handleUnfollow = async (userId)=>{
           {lusers.map((x) => (
             <div className='flex usersDiv md:justify-around' key={x._id}>
               <div className='profileImgDiv'>
-                <img
-                  className='rounded-full lg:flex profilePic md:hidden'
-                  src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg"
-                  alt=""
-                />
+
+              <Link href={`/userProfileView/${x._id}`} >
+                  <img
+                    className="rounded-full lg:flex profilePic md:hidden"
+                    src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg"
+                    alt=""
+                  />
+                </Link>
+
+
+                {/* <Link href={{
+                  pathname:'/userProfileView/',
+                  query:{
+                    userid:x._id
+                  }
+                }} >
+                  <img
+                    className="rounded-full lg:flex profilePic md:hidden"
+                    src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg"
+                    alt=""
+                  />
+                </Link> */}
               </div>
               <p className='username md:flex'>{x.username}</p>
               
