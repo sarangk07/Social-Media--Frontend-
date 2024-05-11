@@ -91,10 +91,7 @@ const UserProfile = (params) => {
       <div className='md:flex w-2/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
       <div className='w-3/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5'>
       <div className='flex justify-evenly '>
-        <h3 className='active: text-orange-600' >follower</h3>
-        <h3 className='active: text-orange-600'>my
-        
-        </h3>
+        <h3 className='active: text-orange-600' >Posts</h3>
       </div>
       <div></div>
       </div>

@@ -55,10 +55,11 @@ function Navbar() {
     <div className='main'>
       <div className='leftDiv'>
         <li><Link href='home'> Home </Link></li>
-        <li>Messages</li>
         <li> <Link href='/' onClick={logOut}>
             logout
           </Link> </li>
+        {/* <li>Messages</li> */}
+        
 
       </div>
         
