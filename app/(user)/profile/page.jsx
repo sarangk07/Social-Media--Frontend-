@@ -12,7 +12,7 @@ function  Profile() {
     useEffect(()=>{
         const getUsers = async()=>{
           const response = await axios.get('https://social-media-5ukj.onrender.com/user/');
-          // console.log(response);
+          // console.log(user,'user................................');
           const allUsers = await response.data
           // console.log(response.data);
           // console.log(allUsers,'nav  bar')

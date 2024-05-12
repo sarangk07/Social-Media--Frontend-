@@ -17,7 +17,7 @@ export default function Home() {
   const [post,getPost] = useState([])
   
 
-  console.log(currentUser._id,'ididdididi')
+  console.log(currentUser,'ididdididi')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +34,8 @@ export default function Home() {
         cEmail(cId);
         console.log(cId,'email iddddddddddddddddddddddddddddddddddddddddddddddddd');
         setData({ allUsers, lusers });
+
+
       } catch (error) {
         console.error('Error fetching data:', error);
         setData({ allUsers: [], lusers: [] });
@@ -107,11 +109,11 @@ console.log("Post data:", post);
               <div className='w-1/3'>
 
               <Link href={`/userProfileView/${x._id}`} >
-                  <img
-                    className="rounded-full w-12 h-12 lg:flex profilePic md:hidden"
-                    src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg"
-                    alt=""
-                  />
+              <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-gray-300 flex items-center justify-center">
+                <span className="text-gray-700 text-xl font-bold">
+                  {x.username.charAt(0).toUpperCase()}
+                </span>
+              </div>
                 </Link>
 
               </div>
@@ -191,35 +193,7 @@ console.log("Post data:", post);
     ) : (
       <div>NO Post Yet...!</div>
     )}
-
-
-
-
-
-
-{/* {post?
-  <div className='feedImgDiv'>
-              <div>
-                <div className="userPic flex justify-between items-center">
-                  <div className='flex '>
-                    <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" />
-                    <h4 className='relative left-5'>{post.username}</h4>
-                    <p>{post.desc}</p>
-                  </div>
-                  <button className=' rounded-full text-white bg-emerald-400 hover:bg-emerald-500 text-sm w-16 h-10'>follow</button>
-                </div>
-              </div>
-              <div className='flex justify-center '><img className='feedimg' src={post.image} alt="" /></div>
-              <div className='flex justify-around'>
-                <button>like</button>
-                <button>comment</button>
-                <button>share</button>
-              </div>
-            </div>
-:
-<div>not found any thing</div>
-} */}
-            
+    
           </div>
         </div>
       </div>

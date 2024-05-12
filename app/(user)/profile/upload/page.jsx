@@ -1,30 +1,5 @@
 
 
-
-// const handleUpload = (e)=>{
-//     e.preventDefault()
-//     useEffect(()=>{
-//         const uploadMedia = async ()=>{
-    
-//             const id = localStorage.getItem('id')
-    
-//             const response = await axios.post(`https://social-media-5ukj.onrender.com/createPost`,{
-//                 desc:selectedFile,
-//                 userId:id
-//             })
-//             close.log(response)
-//         }
-//         uploadMedia()
-//     },[])
-// }
-
-
-
-
-
-
-
-
 'use client'
 
 
