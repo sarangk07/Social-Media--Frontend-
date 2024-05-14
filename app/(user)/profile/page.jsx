@@ -4,15 +4,17 @@ import axios from 'axios';
 import Link from 'next/link';
 import React from 'react'
 import { useEffect,useState } from 'react';
+import LikeBtn from '../components/likeBTN';
 
 function  Profile() {
     const[user,setUser]=useState(null);
-    const[post,setPosts] = useState([])
+    const[post,setPosts] = useState([]);
+    const [openCMT,setOpenCMT]= useState(false)
 
     useEffect(()=>{
         const getUsers = async()=>{
           const response = await axios.get('https://social-media-5ukj.onrender.com/user/');
-          // console.log(user,'user................................');
+          console.log(user,'user................................');
           const allUsers = await response.data
           // console.log(response.data);
           // console.log(allUsers,'nav  bar')
@@ -27,20 +29,14 @@ function  Profile() {
                 // localStorage.setItem('id',x._id)
               }
           })
-        console.log(user)
-  
-          
+        console.log(user) 
         }
         getUsers()
       },[])
 
 
 
-  
-
-
       useEffect(()=>{
-  
         const getPosts = async ()=>{
           try{
           const id = localStorage.getItem('id')
@@ -58,13 +54,22 @@ function  Profile() {
         }
         }
         getPosts()
-      
-     
-     
     },[])
 
 
-      
+
+    const commentClick = (postId) => {
+      setOpenCMT(prevState => prevState === postId ? null : postId);
+    };
+    
+  
+    const logOut = ()=>{
+      localStorage.removeItem('token');
+      localStorage.removeItem('email');
+      localStorage.removeItem('id');
+    }
+
+
   return (
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
       <div className='flex flex-col h-2/6  items-center'>
@@ -77,7 +82,7 @@ function  Profile() {
               </div>
             <div className='flex justify-between pt-14'>
             {user?<>
-                <div className='flex justify-evenly w-1/3 top-5'>
+                <div className='flex justify-evenly w-1/3 top-5'> 
                     
                     <div>
                     <h5>{user.username}</h5>
@@ -85,6 +90,12 @@ function  Profile() {
                     </div>
                     <div className='rounded-md bg-emerald-800 w-11 h-10 text-white cursor-pointer flex items-center justify-center hover:bg-emerald-700'>edit</div>
                     <Link href='/profile/upload' className='rounded-md bg-emerald-800 w-11 h-10 text-white cursor-pointer flex items-center justify-center hover:bg-emerald-700'>Create</Link>
+                    
+                    
+                    <Link href='/' onClick={logOut}>
+                     logout
+                    </Link>
+
                     
                 </div>
                 
@@ -102,47 +113,41 @@ function  Profile() {
       <div className='md:flex w-2/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
       <div className='w-3/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       <div className='flex  flex-col  '>
-       <div className='flex justify-evenly'>
-        {/* <h3 className='active: text-orange-600' >follower</h3> */}
+      <div className='flex justify-evenly'>
         <h3 className='active: text-orange-600'>my</h3>
-        </div>
-        
-              
+      </div>
+      <div className='ml-7 mr-7 pb-4'>
 
-        <div className='ml-7 mr-7 pb-4'>
+    {post && post.length > 0 ? (
+      <div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
+        {post.map((item) => (
+          <div className='bg-emerald-50 rounded-xl' key={item._id}>
+            <div className="flex justify-between items-center">
+              <div className='flex flex-col'>
+                <p>{item.desc}</p>
+              </div>
+            </div>
+            <div className='flex justify-center relative '>
+              <img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt=""/>
+            </div>
+            <div className='flex justify-around mb-5'>
+              <LikeBtn postID={item._id} />
+              <button onClick={() => commentClick(item._id)}>comment</button>
+              <button>share</button>
+            </div>
+            {openCMT === item._id ? ( 
+              <div>
+                <p>comments here</p>
+              </div>
+            ) : null}
+            <hr className='mb-8'/>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div>NO Post Yet...!</div>
+    )}
 
-{post && post.length > 0 ? (
-<div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
-{post.map((item) => (
-<div className='bg-emerald-50 rounded-xl' key={item._id}>
-  <div className="flex justify-between items-center">
-    <div className='flex flex-col'>
-      {/* <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" /> */}
-      {/* <h4 className='relative left-5'>{item._id}</h4><br /> */}
-      <p>{item.desc}</p>
-    </div>
-
-
-
-
-   
-
-  </div>
-  <div className='flex justify-center relative '><img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt=""/> </div>
-  
-  <div className='flex justify-around mb-5'>
-    <button>like</button>
-    <button>comment</button>
-    <button>share</button>
-  </div>
-  <hr className='mb-8'/>
-</div>
-))}
-</div>
-) : (
-<div>NO Post Yet...!</div>
-)}
-  
 </div>
 </div>
   <div></div>

@@ -46,7 +46,7 @@ const UnfollowButton = ({ userId, currentUser }) => {
           reverseOrder={false}
         />
     
-    <button className='rounded-md bg-gray-400 text-yellow-200' onClick={handleUnfollow} disabled={isUnFollowing} >
+    <button className='rounded-md p-2 hover:bg-orange-300 hover:text-black bg-white text-gray-800' onClick={handleUnfollow} disabled={isUnFollowing} >
         
         {isLoading ? 'Unfollowing...' : (isUnFollowing ? 'Follow' : 'Unfollow')}
     </button>

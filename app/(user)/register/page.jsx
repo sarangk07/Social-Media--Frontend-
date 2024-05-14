@@ -4,7 +4,6 @@ import Link from 'next/link';
 import './style.css'
 import React, { useRef, useState } from 'react'
 import axios from 'axios';
-// import { useEffect } from 'react';
 import { Formik,Form,Field,ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import toast, { Toaster } from 'react-hot-toast';

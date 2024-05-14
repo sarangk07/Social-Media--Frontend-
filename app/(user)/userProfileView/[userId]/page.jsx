@@ -9,16 +9,21 @@ import axios from 'axios';
 
 
 const UserProfile = (params) => {
-  const[userV,setVUser]=useState({});
-  const[id , setID] = useState(null)
+  const[userV,setVUser]=useState([]);
+  const[id , setID] = useState(null);
+  const[allUsers, setAllusers] = useState([]);
+  const [followersFetched, setFollowersFetched] = useState(false);
+  const[followedUsers,setFollowedUsers]=useState([]);
+  const[post,setPosts]= useState([]);
   
-  console.log(params.params.userId,'sdddddddddddddddddddd');
+  // console.log(params.params.userId,'sdddddddddddddddddddd');
  useEffect(()=>{
   setID(params.params.userId)
  },[params])
   
 
 
+ console.log(id,': use');
 
 
  useEffect(()=>{
@@ -28,8 +33,8 @@ const UserProfile = (params) => {
       console.log(response);
       const allUsers = await response.data
       console.log(response.data);
-      console.log(allUsers,'****************')
-      
+      // console.log(allUsers,'****************')
+      setAllusers(allUsers)
       const foundUser = allUsers.find(x => String(x._id) === String(id));
       
         if (foundUser) {
@@ -37,11 +42,6 @@ const UserProfile = (params) => {
           setVUser(foundUser);
           console.log(userV)
         } 
-      
-          
-        
-      
-        
     }
     catch(error){
       console.log(error.response.data);
@@ -53,7 +53,48 @@ const UserProfile = (params) => {
   getUsers()
 },[id])
 
+const getFollowersProfile = () => {
+  if (!followersFetched && userV.followers) {
+    userV.followers.forEach((followerId) => {
+      const followedUser = allUsers.find(user => user._id === followerId);
+      if (followedUser) {
+        setFollowedUsers(prevFollowedUsers => [...prevFollowedUsers, followedUser]);
+      }
+    });
+    setFollowersFetched(true);
+  }
+};
 
+
+useEffect(() => {
+  const getPosts = async () => {
+    try {
+      if (id !== null) { // Check if id is not null before making the request
+        console.log(id, ': user idddddddddddddddddddddddddddddddddddddd11111111111111111111');
+        console.log(userV, 'clicked user id//////////////////////');
+        const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${id}/timeline`);
+        console.log(response, 'responseeeeeeeeeeeeeeeeeeeeeeeeee');
+        console.log(response.data, 'post get responseeeeeeeeeeeeeeeeeeeeeeeeee');
+        if (response.data.length !== 0) {
+          setPosts(response.data);
+        }
+        else{
+          console.log('no post found!');
+        }        
+      }
+    } catch (error) {
+      console.log(error.response, 'get error');
+      if (error.response.status == 500) {
+        console.log('server error');
+      }
+    }
+  };
+  getPosts();
+}, [id]);
+
+
+
+console.log(followedUsers,'---------------------------followedUsers------------********************');
   return (
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
       <div className='flex flex-col h-2/6  items-center'>
@@ -77,7 +118,7 @@ const UserProfile = (params) => {
                 </div>
                 
                 
-                <div>
+                <div className='cursor-pointer' onClick={getFollowersProfile}>
                   <p>followers: {userV.followers ? userV.followers.length : 0}</p>
                   <p>following: {userV.following ? userV.following.length : 0}</p>
                 </div>
@@ -88,10 +129,60 @@ const UserProfile = (params) => {
         </div>
     </div>
     <div className=' flex justify-around h-4/6 w-screen bg-[#D9D9D9]'>
-      <div className='md:flex w-2/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
-      <div className='w-3/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5'>
-      <div className='flex justify-evenly '>
-        <h3 className='active: text-orange-600' >Posts</h3>
+      <div className='md:flex w-2/5 flex flex-col md:justify-center bg-[#FFFFFF] m-1 rounded-2xl sm:hidden '>
+      {followedUsers.length > 0 ?
+      followedUsers.map((followedUser, index) => (
+        <div>
+        <div className=' flex  justify-evenly  m-2 rounded-md bg-slate-400 w-5/5' key={index}>
+          <p>Name: {followedUser.username}</p>
+          <p>Email: {followedUser.email}</p>
+        </div>
+        </div>
+      )) :
+      <p>No followed users found</p>
+    }
+      
+      
+      
+      </div>
+      <div className='w-3/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div className='flex justify-evenly m-3 '>
+        <h3 className='active: text-orange-600 pb-3 mb-3' >
+        
+        </h3>
+        {post && post.length > 0 ? (
+<div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
+{post.map((item) => (
+<div className='bg-emerald-50 rounded-xl mb-3' key={item._id}>
+  <div className="flex justify-between items-center">
+    <div className='flex flex-col'>
+      {/* <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" /> */}
+      {/* <h4 className='relative left-5'>{item._id}</h4><br /> */}
+      <p>{item.desc}</p>
+    </div>
+
+
+
+
+   
+
+  </div>
+  <div className='flex justify-center relative '><img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt=""/> </div>
+  
+  <div className='flex justify-around mb-5'>
+    <button>likes: </button>
+    <button>comment</button>
+    <button>share</button>
+  </div>
+  <hr className='mb-8'/>
+</div>
+))}
+</div>
+) : (
+<div>NO Post Yet...!</div>
+)}
+  
+        
       </div>
       <div></div>
       </div>

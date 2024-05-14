@@ -47,7 +47,7 @@ const FollowButton = ({ userId, currentUser }) => {
           position="top-center"
           reverseOrder={false}
         />
-    <button className='rounded-md bg-gray-400 text-blue-200' onClick={handleFollow} disabled={isFollowing}>
+    <button className='rounded-md p-2 hover:bg-emerald-300 hover:text-black bg-white text-gray-800' onClick={handleFollow} disabled={isFollowing}>
          {isLoading ? 'following...' : (isFollowing ? 'Unfollow' : 'Follow')}
       {/* {isFollowing ? 'unfollow' : 'Follow'} */}
     </button>

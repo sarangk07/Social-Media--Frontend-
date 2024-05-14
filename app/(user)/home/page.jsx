@@ -86,7 +86,7 @@ useEffect(()=>{
   
  
  
-},[])
+},[allUsers])
 
 if(!post){
   return toast.loading('Loading...')
@@ -102,14 +102,14 @@ console.log("Post data:", post);
         />
       <Navbar />
       <div className='flex w-screen h-screen sm:justify-center'>
-        <div className='md:flex md:flex-col hidden  w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
+        <div className='md:flex md:flex-col hidden   w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
           <p>Recomended users:</p>
           {lusers.map((x) => (
-            <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 p-4' key={x._id}>
+            <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4' key={x._id}>
               <div className='w-1/3'>
 
               <Link href={`/userProfileView/${x._id}`} >
-              <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-gray-300 flex items-center justify-center">
+              <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-300 flex items-center justify-center">
                 <span className="text-gray-700 text-xl font-bold">
                   {x.username.charAt(0).toUpperCase()}
                 </span>
@@ -133,7 +133,7 @@ console.log("Post data:", post);
             </div>
           ))}
         </div>
-        <div className='bg-white w-3/4 flex flex-col rounded-2xl m-2 p-5 h-full'>
+        <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-5 h-full'>
           <div className='m-5 flex justify-around'>
             <a href="">follwers</a>
             <a href="">discover</a>
@@ -142,9 +142,9 @@ console.log("Post data:", post);
           <div className='m-6 h-screen overflow-y-auto ' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
 
           {post && post.length > 0 ? (
-      <div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
+      <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>
         {post.map((item) => (
-          <div className='bg-emerald-50 rounded-xl' key={item._id}>
+          <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
             <div className="flex justify-between items-center">
               <div className='flex flex-col'>
                 <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" />
