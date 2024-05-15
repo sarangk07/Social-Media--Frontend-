@@ -9,7 +9,9 @@ import LikeBtn from '../components/likeBTN';
 function  Profile() {
     const[user,setUser]=useState(null);
     const[post,setPosts] = useState([]);
-    const [openCMT,setOpenCMT]= useState(false)
+    const [openCMT,setOpenCMT]= useState(false);
+    const [comments,setComments] = useState([]);
+    const [createCMT,setCreateCMT] = useState(null);
 
     useEffect(()=>{
         const getUsers = async()=>{
@@ -58,7 +60,10 @@ function  Profile() {
 
 
 
-    const commentClick = (postId) => {
+    const commentClick = async (postId) => {
+      const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${postId}/comments`);
+      console.log(response,'comment get responseeeee');
+      setComments(response.data)
       setOpenCMT(prevState => prevState === postId ? null : postId);
     };
     
@@ -69,7 +74,24 @@ function  Profile() {
       localStorage.removeItem('id');
     }
 
+     const handleCrateCMT = async (postid)=>{
+      const uid = localStorage.getItem('id')
+      console.log(createCMT,'inputed comment..................',postid,': post id',uid,  ':usser id');
+      const formdata = new FormData()
+      formdata.append('userId',uid)
+      formdata.append('text',createCMT)
+      const response = await axios.post(`https://social-media-5ukj.onrender.com/posts/${postid}/comment`,formdata,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 
+      console.log(response.data,'comment created status');
+     }
+
+    
+
+console.log(comments,'typed comment');
   return (
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
       <div className='flex flex-col h-2/6  items-center'>
@@ -121,7 +143,7 @@ function  Profile() {
     {post && post.length > 0 ? (
       <div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
         {post.map((item) => (
-          <div className='bg-emerald-50 rounded-xl' key={item._id}>
+          <div className='bg-emerald-50 rounded-xl mb-5' key={item._id}>
             <div className="flex justify-between items-center">
               <div className='flex flex-col'>
                 <p>{item.desc}</p>
@@ -137,7 +159,22 @@ function  Profile() {
             </div>
             {openCMT === item._id ? ( 
               <div>
-                <p>comments here</p>
+                <input type="text" onChange={(e)=>setCreateCMT(e.target.value)} placeholder='comment...' className='text-gray-700 border-none rounded-md'/><button  href="" className='rounded-sm inline-block bg-teal-800 text-white w-8' onClick={()=>handleCrateCMT(item._id)}>Sent</button>
+                {comments.length > 0 ? (
+                  <>
+                    {comments.map((comment) => (
+                      <div key={comment._id}>
+                        <p>{comment.text}</p>
+                        <p>Posted by: {comment.userId}</p>
+                        <p>Created at: {comment.createdAt}</p>
+                        <hr />
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <p>No comments found!</p>
+                )}
+
               </div>
             ) : null}
             <hr className='mb-8'/>
