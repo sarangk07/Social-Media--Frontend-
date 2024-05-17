@@ -5,15 +5,18 @@ import Link from 'next/link';
 import React from 'react'
 import { useEffect,useState } from 'react';
 import LikeBtn from '../components/likeBTN';
+import CmtDeleteBTN from '../components/deleteCMTbutton';
+import EditCMTButton from '../components/editCMTbutton';
+import PostDeleteBTN from '../components/postDeleteBTN';
 
 function  Profile() {
     const[user,setUser]=useState(null);
     const[post,setPosts] = useState([]);
     const [openCMT,setOpenCMT]= useState(false);
     const [comments,setComments] = useState([]);
-    const [createCMT,setCreateCMT] = useState(null);
+    const [createCMT,setCreateCMT] = useState('');
 
-    useEffect(()=>{
+    useEffect(()=>{ 
         const getUsers = async()=>{
           const response = await axios.get('https://social-media-5ukj.onrender.com/user/');
           console.log(user,'user................................');
@@ -74,7 +77,12 @@ function  Profile() {
       localStorage.removeItem('id');
     }
 
-     const handleCrateCMT = async (postid)=>{
+    const handleCreateCMT = async (postid)=>{
+
+      if (!createCMT) {
+        console.log('Comment is empty');
+        return; // Do not proceed if the comment is empty
+      }
       const uid = localStorage.getItem('id')
       console.log(createCMT,'inputed comment..................',postid,': post id',uid,  ':usser id');
       const formdata = new FormData()
@@ -85,13 +93,18 @@ function  Profile() {
           'Content-Type': 'application/json'
         }
       });
-
+      setCreateCMT('');
+      const commentsResponse = await axios.get(`https://social-media-5ukj.onrender.com/posts/${postid}/comments`);
+      setComments(commentsResponse.data);
       console.log(response.data,'comment created status');
+      // setCommentUpdated(prev => !prev);
      }
+
+    console.log(comments,'typed comment');
 
     
 
-console.log(comments,'typed comment');
+
   return (
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
       <div className='flex flex-col h-2/6  items-center'>
@@ -155,18 +168,43 @@ console.log(comments,'typed comment');
             <div className='flex justify-around mb-5'>
               <LikeBtn postID={item._id} />
               <button onClick={() => commentClick(item._id)}>comment</button>
+              <PostDeleteBTN postId={item._id}/>
               <button>share</button>
             </div>
+            
+            
+            
+            
             {openCMT === item._id ? ( 
               <div>
-                <input type="text" onChange={(e)=>setCreateCMT(e.target.value)} placeholder='comment...' className='text-gray-700 border-none rounded-md'/><button  href="" className='rounded-sm inline-block bg-teal-800 text-white w-8' onClick={()=>handleCrateCMT(item._id)}>Sent</button>
+                <input
+                  type="text"
+                  value={createCMT || ''} 
+                  onChange={(e) => setCreateCMT(e.target.value)}
+                  placeholder="comment..."
+                  className="text-gray-700 border-none rounded-md"
+                />
+                {createCMT && (
+                  <button
+                    href=""
+                    className="rounded-sm inline-block bg-teal-800 text-white w-8"
+                    onClick={() => handleCreateCMT(item._id)}
+                  >
+                    Sent
+                  </button>
+                )}
                 {comments.length > 0 ? (
                   <>
                     {comments.map((comment) => (
                       <div key={comment._id}>
+                        <div className='flex justify-between'>
                         <p>{comment.text}</p>
-                        <p>Posted by: {comment.userId}</p>
-                        <p>Created at: {comment.createdAt}</p>
+                        <div className='flex justify-evenly'><EditCMTButton commentId={comment._id} postId={item._id}/><CmtDeleteBTN commentId={comment._id} postId={item._id}/></div>
+                        
+                        </div>
+                        
+                        {/* <p>Posted by: {comment.userId}</p> */}
+                        {/* <p>Created at: {comment.createdAt}</p> */}
                         <hr />
                       </div>
                     ))}
@@ -174,9 +212,10 @@ console.log(comments,'typed comment');
                 ) : (
                   <p>No comments found!</p>
                 )}
-
+                <hr />
               </div>
             ) : null}
+            
             <hr className='mb-8'/>
           </div>
         ))}
@@ -189,9 +228,8 @@ console.log(comments,'typed comment');
 </div>
   <div></div>
 </div>
+</div>  
 </div>
-  
-    </div>
   )
 }
 

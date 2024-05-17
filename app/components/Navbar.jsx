@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import React, { useEffect, useState ,useRef} from 'react'
-import './navStyle.css'
+
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -50,12 +50,12 @@ function Navbar() {
       };
   return (
     <div className='flex w-full h-4/5 bg-white items-center p-2'>
-      <div className='leftDiv'>
+      <div className='flex w-2/4 justify-between'>
         <li className='list-none pl-5'><Link href='home'> Home </Link></li>
 
       </div>
         
-    <div className='searchDiv'>
+    <div className='w-4/6'>
     <div className="items-center px-4 flex justify-center" >
             <div className="relative mr-3">
                 <div className="absolute top-3 left-3 items-center" ref={clickPoint}>
@@ -73,7 +73,7 @@ function Navbar() {
             </div>
         </div>
     </div>
-        <div className='rightDiv'>
+        <div className='flex justify-end w-1/6'>
             {/* {user?<li>{user}</li>:<li>profile</li>} */}
             {user ? <li className='list-none pr-5'><Link href='profile'>{user.username}</Link></li> : <li>profile</li>}
             
