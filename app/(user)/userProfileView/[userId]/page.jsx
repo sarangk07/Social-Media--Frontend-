@@ -1,10 +1,8 @@
 'use client'
 
-
-
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+
 
 
 
@@ -44,14 +42,13 @@ const UserProfile = (params) => {
         } 
     }
     catch(error){
-      console.log(error.response.data);
-    }
-    
-
-    
+      console.log(error.response);
+    } 
   }
   getUsers()
 },[id])
+
+
 
 const getFollowersProfile = () => {
   if (!followersFetched && userV.followers) {
@@ -64,6 +61,8 @@ const getFollowersProfile = () => {
     setFollowersFetched(true);
   }
 };
+
+
 
 
 useEffect(() => {
@@ -94,7 +93,16 @@ useEffect(() => {
 
 
 
+
+
+
+
+
+
 console.log(followedUsers,'---------------------------followedUsers------------********************');
+
+
+
   return (
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
       <div className='flex flex-col h-2/6  items-center'>
@@ -123,7 +131,7 @@ console.log(followedUsers,'---------------------------followedUsers------------*
                   <p>following: {userV.following ? userV.following.length : 0}</p>
                 </div>
 
-                </>:<div></div>}
+                </>:<div>Loading</div>}
             </div>
 
         </div>

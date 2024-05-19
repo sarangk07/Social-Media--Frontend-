@@ -22,6 +22,7 @@ export default function Home() {
       <div className='flex w-screen h-screen sm:justify-center'>
         <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
           <p>Recommended users:</p>
+          {data.lusers?<>
           {data.lusers.map((x) => (
             <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4' key={x._id}>
               <div className='w-1/3'>
@@ -41,6 +42,11 @@ export default function Home() {
               )}
             </div>
           ))}
+          </>
+        :
+        <div className='flex animate-pulse'>Loading.....</div>
+        }
+          
         </div>
         <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-5 h-full'>
           <div className='m-5 flex justify-around'>
@@ -55,9 +61,12 @@ export default function Home() {
                   <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
                     <div className="flex justify-between items-center">
                       <div className='flex flex-col'>
-                        <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" />
+                        <Link href={`/userProfileView/${item.userId}`}>
+                        <img className='rounded-full w-12 h-12' src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745" alt="" />
+                        </Link>
                         <h4 className='relative left-5'>{item._id}</h4><br />
                         <p>{item.desc}</p>
+
                       </div>
                       {item.userId == currentUser._id ? (
                 
@@ -89,7 +98,14 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div>NO Post Yet...!</div>
+              <div className='flex justify-center flex-col items-center transition-shadow'>
+              <div className="flex justify-center items-center w-12 h-12 bg-emerald-300 animate-spin rounded-full">
+                <div className="absolute w-10 h-1 bg-white rounded-full"></div>
+                <div className="absolute w-10 h-1 bg-white rounded-full transform rotate-90"></div>
+              </div>
+
+              <div className='flex animate-pulse'>Loading.....</div>
+              </div>
             )}
           </div>
         </div>
