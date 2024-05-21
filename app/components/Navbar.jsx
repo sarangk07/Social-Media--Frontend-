@@ -75,7 +75,7 @@ function Navbar() {
     </div>
         <div className='flex justify-end w-1/6'>
             {/* {user?<li>{user}</li>:<li>profile</li>} */}
-            {user ? <li className='list-none pr-5'><Link href='profile'>{user.username}</Link></li> : <li>profile</li>}
+            {user ? <li className='list-none pr-5'><Link href='profile'>{user.username}</Link></li> : <li className='list-none pr-5'>profile</li>}
             
         </div>
         

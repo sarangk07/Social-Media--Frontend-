@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useState, useContext } from 'react';
 import './style.css';
 import AppContext from '@/app/context/myContext'; 
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {
   const { login, loading } = useContext(AppContext);
@@ -15,6 +15,9 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     login(email, password);
+    // if(loading){
+    //   toast.loading('please wait...')
+    // }
   };
 
   const showPassword = () => {

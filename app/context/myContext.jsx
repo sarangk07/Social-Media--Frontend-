@@ -251,9 +251,10 @@ export const AppProvider = ({ children }) => {
       if (foundUser) {
         setCurrentUser(foundUser);
         localStorage.setItem('id', foundUser._id);
+        console.log('ccurrrrrrrrrrrenttttttttttt userrrrrrrrrr: ',foundUser);
       }
     }
-  }, [data.allUsers, emailid]);
+  }, [emailid]);
 
   // Fetch posts of the logged-in user
   useEffect(() => {

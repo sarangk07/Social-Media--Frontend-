@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -42,6 +43,7 @@ const UserProfile = (params) => {
         } 
     }
     catch(error){
+      toast.error('NetWork Error')
       console.log(error.response);
     } 
   }
@@ -105,6 +107,7 @@ console.log(followedUsers,'---------------------------followedUsers------------*
 
   return (
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className='flex flex-col h-2/6  items-center'>
         <div className='w-screen h-2/4 object-cover'>
             <img className='sm:rounded-b-md relative h-full w-full lg:rounded-b-full' src="https://www.dndspeak.com/wp-content/uploads/2021/04/Temple-1-768x512.jpg" alt="" />
