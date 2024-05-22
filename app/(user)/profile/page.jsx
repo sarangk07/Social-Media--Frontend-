@@ -16,14 +16,14 @@ function Profile() {
   const [openCMT, setOpenCMT] = useState(false);
   const [createCMT, setCreateCMT] = useState('');
 
-  const { currentUser, posts, comments, fetchComments, createComment } = useContext(AppContext);
+  const { currentUser, posts, comments, fetchComments, createComment,data } = useContext(AppContext);
+console.log(comments, ': comments');
 
 
-
-  useEffect(() => {
-    console.log('currentUser:', currentUser);
-    console.log('posts:', posts);
-  }, [currentUser, posts]);
+  // useEffect(() => {
+  //   console.log('currentUser:', currentUser);
+  //   console.log('posts:', posts);
+  // }, [currentUser, posts]);
 
   const commentClick = (postId) => {
     fetchComments(postId);
@@ -45,7 +45,15 @@ function Profile() {
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
       <div className='flex flex-col h-2/6 items-center'>
         <div className='w-screen h-2/4 object-cover'>
+        
+
           <img className='sm:rounded-b-md relative h-full w-full lg:rounded-b-full' src="https://www.dndspeak.com/wp-content/uploads/2021/04/Temple-1-768x512.jpg" alt="" />
+          <Link className='absolute top-3 left-3' href='/home' >
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+            </svg>
+          </Link>
         </div>
         <div className='bg-[#FFFFFF] h-3/4 flex flex-col w-4/5 rounded-b-3xl'>
           <div className='pl-1'>
@@ -149,6 +157,14 @@ function Profile() {
                               {comments.map((comment) => (
                                 <div key={comment._id}>
                                   <div className='flex justify-between'>
+                                  { comment.userId ? (
+                                      <>
+                                        {data.allUsers.find(x => x._id === comment.userId)?.username}
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )
+                                  }
                                     <p>{comment.text}</p>
                                     <div className='flex justify-evenly'>
                                       <EditCMTButton commentId={comment._id} postId={item._id} />

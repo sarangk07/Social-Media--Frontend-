@@ -17,18 +17,18 @@ function Navbar() {
             const response = await axios.get('https://social-media-5ukj.onrender.com/user/');
             const allUsers = await response.data
 
-            console.log(allUsers,'nav  bar')
+            // console.log(allUsers,'nav  bar')
           const localEmail = localStorage.getItem('email') ;
           // console.log(localEmail,'localEmail')
           allUsers.map((x)=>{
               // console.log(x.email);
               if(x.email === localEmail){
-                console.log('found')
-                console.log(x.username)
+                // console.log('found')
+                // console.log(x.username)
                 setUser(x)
               }
           })
-        console.log(user)
+        // console.log(user)
           }
           catch{
             toast.error('network error')
