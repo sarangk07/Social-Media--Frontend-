@@ -2,59 +2,59 @@
 
 'use client'
 
-
+import Link from 'next/link';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-function Upload() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [caption,setCaption] = useState(null);
 
-  const handleCaption = (e)=>{
-    setCaption(e.target.value)
-  }
+function Upload() {
+  
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [caption, setCaption] = useState('');
+  const [isUploaded, setIsUploaded] = useState(false);
+
+  const handleCaption = (e) => {
+    setCaption(e.target.value);
+  };
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
-    console.log(caption,'captions');
 
-
-
-
-const handleUpload = async (e) => {
-    e.preventDefault(); 
-    
-
+  const handleUpload = async (e) => {
+    e.preventDefault();
     try {
-
-    const id = localStorage.getItem('id');  
-    const formData = new FormData();
-    formData.append('desc', caption); 
-    formData.append('userId', id);
-    formData.append('file', selectedFile);
-
-
-
-        const response = await axios.post(`https://social-media-5ukj.onrender.com/createPost`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
-      console.log(response,': RESPONSEEEEEEEE');
-      if(response.status == 200){
-        toast.success('file Uploaded!')
-      }else{
-        toast.error('somthing went wrong!')
+      const id = localStorage.getItem('id');
+      const formData = new FormData();
+      formData.append('desc', caption);
+      formData.append('userId', id);
+      formData.append('file', selectedFile);
+      const response = await axios.post(`https://social-media-5ukj.onrender.com/createPost`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      console.log(response, ': RESPONSEEEEEEEE');
+      if (response.status === 200) {
+        toast.success('File Uploaded!');
+        setIsUploaded(true); // Set the isUploaded state to true after successful upload
+      } else {
+        toast.error('Something went wrong!');
       }
     } catch (error) {
       console.error('Error uploading file:', error);
     }
   };
 
-
-
+  
+  useEffect(() => {
+    if (isUploaded) {
+      setSelectedFile(null);
+      setCaption('');
+      setIsUploaded(false); 
+    }
+  }, [isUploaded]);
 
 
 
@@ -65,6 +65,7 @@ const handleUpload = async (e) => {
           position="top-center"
           reverseOrder={false}
         />
+        <Link href='/profile' >Go Back</Link>
       <form className='text-center ' onSubmit={handleUpload} >
         <h1>Upload images or videos</h1><br />
         <input className='border m-3' type="file" name='file' onChange={handleFileChange} /><br />
@@ -96,4 +97,5 @@ const handleUpload = async (e) => {
 }
 
 export default Upload;
+
 

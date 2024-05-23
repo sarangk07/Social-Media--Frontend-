@@ -1,48 +1,40 @@
-'use client';
-
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-
-function LikeBtn({postID}) {
-        const [responseText,setRT] = useState(null);
-        const userId = localStorage.getItem('id');
-        
-
-        const likeAndUnlike = async ()=>{
-            try{
-                console.log(postID,'postId');   
-                const userId = localStorage.getItem('id');
-                if (!userId) {
-                    console.error('User ID not found in localStorage');
-                    return;
-                }
-                console.log(userId,'userid');
-                const fData = {
-                    "userId": userId
-                }
-                const response = await axios.put(`https://social-media-5ukj.onrender.com/posts/${postID}/like`,fData)
-                console.log(response);
-                setRT(response.data)
-
-            }catch{
-                console.log('error!');
-                console.error('Error occurred while liking/unliking post:', error);
-            }
 
 
+import React, { useContext, useState, useEffect } from 'react';
+import AppContext from '@/app/context/myContext';
 
-        }
-    
+function LikeBtn({ postID }) {
+  const { likeUnlikePost, posts } = useContext(AppContext);
+  const [isLiked, setIsLiked] = useState(false);
 
+  useEffect(() => {
+    const post = posts.find((p) => p._id === postID);
+    if (post && post.likes.includes(localStorage.getItem('id'))) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+  }, [posts, postID]);
+
+  const handleLikeUnlike = async () => {
+    try {
+      await likeUnlikePost(postID);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error('Error occurred while liking/unliking post:', error);
+    }
+  };
 
   return (
-    <>
-     <button className='rounded-full bg-emerald-900 text-white w-10' onClick={likeAndUnlike}>
-            {responseText === 'Post liked' ? 'unlike' : 'like'}
-        </button>
-      
-    </>
-  )
+    <button
+      className={`rounded-full text-white w-10 ${
+        isLiked ? 'bg-red-500' : 'bg-emerald-900'
+      }`}
+      onClick={handleLikeUnlike}
+    >
+      {isLiked ? 'Unlike' : 'Like'}
+    </button>
+  );
 }
 
-export default LikeBtn
+export default LikeBtn;

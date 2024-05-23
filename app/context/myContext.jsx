@@ -42,6 +42,28 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+
+
+
+  // Like/Unlike a post
+  const likeUnlikePost = async (postId) => {
+    try {
+      const userId = localStorage.getItem('id');
+      if (!userId) {
+        console.error('User ID not found in localStorage');
+        return;
+      }
+
+      const fData = { userId };
+      const response = await axios.put(`https://social-media-5ukj.onrender.com/posts/${postId}/like`, fData);
+      toast.success(response.data);
+    } catch (error) {
+      handleError(error);
+      console.error('Error occurred while liking/unliking post:', error);
+    }
+  };
+
+//error handling
   const handleError = (error) => {
     if (!error.response) {
       toast.error('Network error!');
@@ -70,6 +92,7 @@ export const AppProvider = ({ children }) => {
         const cId = localStorage.getItem('email');
         setEmail(cId);
         setData({ allUsers, lusers });
+        console.log('allusers : ',allUsers);
       } catch (error) {
         console.error('Error fetching data:', error);
         setData({ allUsers: [], lusers: [] });
@@ -104,7 +127,7 @@ export const AppProvider = ({ children }) => {
     if (currentUser._id) {
       fetchPosts();
     }
-  }, [currentUser]);
+  }, [currentUser,posts,likeUnlikePost]);
 
   // Fetch all posts
   useEffect(() => {
@@ -117,6 +140,7 @@ export const AppProvider = ({ children }) => {
         const responses = await Promise.all(requests);
         const allPosts = responses.flatMap(response => response.data);
         setAllPosts(allPosts);
+        console.log('all posts :',allPosts);
       } catch (error) {
         handleError(error);
       }
@@ -182,14 +206,21 @@ export const AppProvider = ({ children }) => {
       });
 
       toast.success('Comment created successfully');
-      fetchComments(postId); // Refresh comments
+      fetchComments(postId);
     } catch (error) {
       handleError(error);
     }
   };
 
+
+
+
+
+
+
+
   return (
-    <AppContext.Provider value={{ user, login, loading, data, currentUser, posts, allposts, comments,followedPosts, fetchComments, createComment }}>
+    <AppContext.Provider value={{ user, likeUnlikePost, login, loading, data, currentUser, posts, allposts, comments,followedPosts, fetchComments, createComment }}>
       {children}
     </AppContext.Provider>
   );

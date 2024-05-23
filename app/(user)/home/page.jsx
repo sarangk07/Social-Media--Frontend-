@@ -90,7 +90,7 @@ export default function Home() {
                 {allposts.map((item) => (
                   <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
                     <div className="flex flex-col justify-between ">
-                      <div className='flex '>
+                      <div className='flex'>
                         <Link href={`/userProfileView/${item.userId}`}>
                         <img className='rounded-full w-12 h-12' src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745" alt="" />
                         </Link>
@@ -128,8 +128,8 @@ export default function Home() {
                         ))
                       )}
                     </div>
-                    <div className='flex justify-center relative'>
-                      <img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt="" />
+                    <div className='flex justify-center rounded-md relative'>
+                      <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
                     </div>
                     <div className='flex justify-around mb-5'>
                       <button>like</button>
@@ -239,7 +239,7 @@ export default function Home() {
                           )}
                         </div>
                         <div className='flex justify-center relative'>
-                          <img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt="" />
+                          <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
                         </div>
                         <div className='flex justify-around mb-5'>
                           <button>like</button>
@@ -346,7 +346,7 @@ export default function Home() {
                       )}
                     </div>
                     <div className='flex justify-center relative'>
-                      <img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt="" />
+                      <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
                     </div>
                     <div className='flex justify-around mb-5'>
                       <button>like</button>
