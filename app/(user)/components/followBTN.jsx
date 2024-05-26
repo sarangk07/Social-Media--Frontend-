@@ -29,7 +29,7 @@ const FollowButton = ({ userId, currentUser }) => {
       const follow_response = await axios.put(followUrl, requestBody, config);
       console.log('follow response', follow_response.data);
       
-      // Update state or UI accordingly
+      
       setIsLoading(false);
       setIsFollowing(true);
       toast.success('followed')

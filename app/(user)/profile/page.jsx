@@ -20,10 +20,6 @@ function Profile() {
 console.log(comments, ': comments');
 
 
-  // useEffect(() => {
-  //   console.log('currentUser:', currentUser);
-  //   console.log('posts:', posts);
-  // }, [currentUser, posts]);
 
   const commentClick = (postId) => {
     fetchComments(postId);
@@ -100,8 +96,8 @@ console.log(comments, ': comments');
         </div>
       </div>
       <div className='flex justify-around h-4/6 w-screen bg-[#D9D9D9]'>
-        <div className='hidden md:flex w-2/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
-        <div className=' w-4/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className='hidden md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
+        <div className=' w-4/5 text-center  bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className='flex flex-col '>
             <div className='flex justify-evenly'>
               <br />
@@ -120,8 +116,11 @@ console.log(comments, ': comments');
                         <img className='pl-7 pr-7 w-full object-cover rounded-3xl' src={item.image} alt="" />
                       </div>
                       <div className='flex justify-around mb-5'>
-                        <LikeBtn postID={item._id} />
-                        <p>{item.likes.length}</p>
+                        <div className='flex '>
+                          <LikeBtn postID={item._id} />
+                          
+                        </div>
+                        
                         <button onClick={() => commentClick(item._id)}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />

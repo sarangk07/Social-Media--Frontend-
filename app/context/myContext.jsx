@@ -127,7 +127,7 @@ export const AppProvider = ({ children }) => {
     if (currentUser._id) {
       fetchPosts();
     }
-  }, [currentUser,posts,likeUnlikePost]);
+  }, [currentUser]);
 
   // Fetch all posts
   useEffect(() => {
@@ -149,7 +149,7 @@ export const AppProvider = ({ children }) => {
     if (currentUser) {
       fetchAllPosts();
     }
-  }, [currentUser, data.allUsers]);
+  }, [currentUser]);
 
 
   //fetch post of followed users

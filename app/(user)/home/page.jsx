@@ -9,6 +9,7 @@ import FollowButton from '../components/followBTN';
 import UnfollowButton from '../components/unFollowBtn';
 import EditCMTButton from '../components/editCMTbutton';
 import CmtDeleteBTN from '../components/deleteCMTbutton';
+import LikeBtn from '../components/likeBTN';
 
 
 
@@ -43,7 +44,7 @@ export default function Home() {
       <Navbar />
       <div className='flex w-screen h-screen sm:justify-center'>
         <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
-          <p>Recommended users:</p>
+          <p>Recommended Users</p>
           {data.lusers?<>
           {data.lusers.map((x) => (
             <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4' key={x._id}>
@@ -132,13 +133,16 @@ export default function Home() {
                       <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
                     </div>
                     <div className='flex justify-around mb-5'>
-                      <button>like</button>
+                      <div className='flex '>
+                          <LikeBtn postID={item._id} />
+                    
+                      </div>
                       <button onClick={() => commentClick(item._id)}>comment</button>
                       <button>share</button>
                     </div>
 
                     {openCMT === item._id ? (
-                        <div>
+                        <div className='pl-4 pr-4'>
                           <input
                             type="text"
                             value={createCMT || ''}
@@ -148,10 +152,12 @@ export default function Home() {
                           />
                           {createCMT && (
                             <button
-                              className="rounded-sm inline-block bg-teal-800 text-white w-8"
+                              className='pl-3 relative top-1.5'
                               onClick={() => handleCreateCMT(item._id)}
                             >
-                              Sent
+                              <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                              </svg>
                             </button>
                           )}
                           {comments.length > 0 ? (
@@ -242,7 +248,10 @@ export default function Home() {
                           <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
                         </div>
                         <div className='flex justify-around mb-5'>
-                          <button>like</button>
+                        <div className='flex '>
+                          <LikeBtn postID={item._id} />
+                          
+                        </div>
                           <button onClick={() => commentClick(item._id)}>comment</button>
                           
                           <button>share</button>
@@ -324,7 +333,7 @@ export default function Home() {
                         <Link href={`/userProfileView/${item.userId}`}>
                         <img className='rounded-full w-12 h-12' src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745" alt="" />
                         </Link>
-                        <h4 className='relative left-5'>{item._id}</h4><br />
+                        {/* <h4 className='relative left-5'>{item._id}</h4><br /> */}
                         <p>{item.desc}</p>
 
                       </div>
@@ -349,7 +358,10 @@ export default function Home() {
                       <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
                     </div>
                     <div className='flex justify-around mb-5'>
-                      <button>like</button>
+                        <div className='flex '>
+                          <LikeBtn postID={item._id} />
+                         
+                        </div>
                       <button onClick={() => commentClick(item._id)}>comment</button>
                       
                       <button>share</button>

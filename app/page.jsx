@@ -14,9 +14,9 @@ export default function Home() {
  
   return (
     <main className='container-fluid main bg-black'>
-      <div className='text-blue textDiv'> <h1>WE<span style={{color:'yellow'}}>L</span>COME</h1>
+      <div className='text-gray-600 textDiv'> <h1>WE<span className='text-emerald-400'>L</span>COME</h1>
       <br />
-        <Link className='btn btn-warning' href="./login">Get Start!</Link><br />
+        <Link className='rounded-full bg-emerald-500 p-2 text-gray-800 no-underline' href="./login">Get Start!</Link><br />
       
       </div>
       <div className='imgDiv'></div>

@@ -67,7 +67,7 @@ function Upload() {
         />
         <Link href='/profile' >Go Back</Link>
       <form className='text-center ' onSubmit={handleUpload} >
-        <h1>Upload images or videos</h1><br />
+        <h1>Upload images</h1><br />
         <input className='border m-3' type="file" name='file' onChange={handleFileChange} /><br />
         <input className='text-white border-none bg-gray-900 m-3' type="text" onChange={handleCaption} placeholder='type a caption' /><br />
         {selectedFile&&caption?
