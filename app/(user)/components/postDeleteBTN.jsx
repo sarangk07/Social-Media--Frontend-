@@ -6,15 +6,24 @@ import React from 'react';
 
 function PostDeleteBTN({ postId }) {
     const handleDelete = async () => {
-        const id = localStorage.getItem('id');
-        const authToken = localStorage.getItem('token');
-
-    
+        
 
         try {
-            const response = await axios.delete(`http://social-media-5ukj.onrender.com/posts/${postId}`, {
-                data: { userId: id }
-                });
+            const id = localStorage.getItem('id');
+            const authToken = localStorage.getItem('token');
+
+            const requestBody = { userId: id };
+            const deleteUrl = `https://social-media-5ukj.onrender.com/posts/${postId}`;
+
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                },
+                data: requestBody
+            };
+
+            const response = await axios.delete(deleteUrl, config);
             console.log(response.data, 'delete post response!');
         } catch (error) {
             console.log('error: ', error);

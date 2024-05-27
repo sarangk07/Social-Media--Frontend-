@@ -95,7 +95,7 @@ console.log(comments, ': comments');
           </div>
         </div>
       </div>
-      <div className='flex justify-around h-4/6 w-screen bg-[#D9D9D9]'>
+      <div className='flex justify-around h-5/6 w-screen bg-[#D9D9D9] overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <div className='hidden md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
         <div className=' w-4/5 text-center  bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className='flex flex-col '>
@@ -105,85 +105,89 @@ console.log(comments, ': comments');
             <div className='ml-7 mr-7 pb-4'>
               {posts && posts.length > 0 ? (
                 <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>
-                  {posts.map((item) => (
-                    <div className='bg-emerald-50 rounded-xl mb-5' key={item._id}>
-                      <div className="flex justify-between items-center">
-                        <div className='flex flex-col'>
-                          <p>{item.desc}</p>
+                  {posts.filter((item) => item.userId === currentUser._id).map((item) =>
+                  
+                    
+                      <div className='bg-emerald-50 rounded-xl mb-5' key={item._id}>
+                        <div className="flex justify-between items-center">
+                          <div className='flex flex-col'>
+                            <p>{item.desc}</p>                        
+                          </div>
                         </div>
-                      </div>
-                      <div className='flex justify-center relative'>
-                        <img className='pl-7 pr-7 w-full object-cover rounded-3xl' src={item.image} alt="" />
-                      </div>
-                      <div className='flex justify-around mb-5'>
-                        <div className='flex '>
-                          <LikeBtn postID={item._id} />
+                        <div className='flex justify-center relative'>
+                          <img className='pl-7 pr-7 w-full object-cover rounded-3xl' src={item.image} alt="" />
+                        </div>
+                        <div className='flex justify-around mb-5'>
+                          <div className='flex '>
+                            <LikeBtn postID={item._id} />
+                            
+                          </div>
                           
-                        </div>
-                        
-                        <button onClick={() => commentClick(item._id)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                        </svg>
-                        </button>
-                        <PostDeleteBTN postId={item._id} />
-                        <button>
+                          <button onClick={() => commentClick(item._id)}>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                           </svg>
-                        </button>
-                      </div>
-                      {openCMT === item._id ? (
-                        <div>
-                          <input
-                            type="text"
-                            value={createCMT || ''}
-                            onChange={(e) => setCreateCMT(e.target.value)}
-                            placeholder="comment..."
-                            className="text-gray-700 border-none rounded-md -mt-5 animate-pulse"
-                          />
-                          {createCMT && (
-                            <button
-                              onClick={() => handleCreateCMT(item._id)}
-                              className='pl-3 relative top-1.5'
-                            >
-                              <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                              </svg>
-                            </button>
-                          )}
-                          {comments.length > 0 ? (
-                            <>
-                              {comments.map((comment) => (
-                                <div key={comment._id}>
-                                  <div className='flex justify-between'>
-                                  { comment.userId ? (
-                                      <>
-                                        {data.allUsers.find(x => x._id === comment.userId)?.username}
-                                      </>
-                                    ) : (
-                                      <></>
-                                    )
-                                  }
-                                    <p>{comment.text}</p>
-                                    <div className='flex justify-evenly'>
-                                      <EditCMTButton commentId={comment._id} postId={item._id} />
-                                      <CmtDeleteBTN commentId={comment._id} postId={item._id} />
-                                    </div>
-                                  </div>
-                                  <hr />
-                                </div>
-                              ))}
-                            </>
-                          ) : (
-                            <p>No comments found!</p>
-                          )}
-                          <hr />
+                          </button>
+                          <PostDeleteBTN postId={item._id} />
+                          <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                            </svg>
+                          </button>
                         </div>
-                      ) : null}
-                      <hr className='mb-8' />
-                    </div>
-                  ))}
+                        {openCMT === item._id ? (
+                          <div>
+                            <input
+                              type="text"
+                              value={createCMT || ''}
+                              onChange={(e) => setCreateCMT(e.target.value)}
+                              placeholder="comment..."
+                              className="text-gray-700 border-none rounded-md -mt-5 animate-pulse"
+                            />
+                            {createCMT && (
+                              <button
+                                onClick={() => handleCreateCMT(item._id)}
+                                className='pl-3 relative top-1.5'
+                              >
+                                <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                </svg>
+                              </button>
+                            )}
+                            {comments.length > 0 ? (
+                              <>
+                                {comments.map((comment) => (
+                                  <div key={comment._id}>
+                                    <div className='flex justify-between'>
+                                    { comment.userId ? (
+                                        <>
+                                          {data.allUsers.find(x => x._id === comment.userId)?.username}
+                                        </>
+                                      ) : (
+                                        <></>
+                                      )
+                                    }
+                                      <p>{comment.text}</p>
+                                      <div className='flex justify-evenly'>
+                                        <EditCMTButton commentId={comment._id} postId={item._id} />
+                                        <CmtDeleteBTN commentId={comment._id} postId={item._id} />
+                                      </div>
+                                    </div>
+                                    <hr />
+                                  </div>
+                                ))}
+                              </>
+                            ) : (
+                              <p>No comments found!</p>
+                            )}
+                            <hr />
+                          </div>
+                        ) : null}
+                        <hr className='mb-8' />
+                      </div>
+                      
+                    
+                  )}
                 </div>
               ) : (
                 <div className='flex justify-center flex-col items-center'>

@@ -57,7 +57,7 @@ input:hover{
     box-shadow: 4px 4px rgb(205, 192, 252);
 }
 input:focus{
-    box-shadow: 4px 4px rgb(176, 179, 22);
+    box-shadow: 4px 4px rgb(22, 179, 101);
 }
 .btnDiv{
     display: flex;

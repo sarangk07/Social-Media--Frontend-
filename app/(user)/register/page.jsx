@@ -79,19 +79,19 @@ const handleSubmit = async (values, { resetForm }) => {
 
 
 
-      <div className='mainDivLogin '>
+      <div className='mainDivLogin flex flex-row justify-center items-center w-full'>
         <div>
         <Toaster
           position="top-center"
           reverseOrder={false}
         />
         </div>
-      <div className='secondDivLogin'>
-      <div className='loginImgDiv col-md-6'>
+      <div className='bg-black w-full h-4/5 overflow-hidden flex flex-row justify-center items-center rounded-2xl'>
+      <div className=' bg-black w-2/5 m-0 rounded-custom col-md-6'>
         <img  className='loginimg' src="https://i.pinimg.com/originals/d3/9a/0d/d39a0daf8440e7c1e985f448497c550b.jpg" alt="" />
       </div>
       
-      <div className='FormDivLogin' >
+      <div className='FormDivLogin w-4/6 flex flex-row justify-center items-center' >
       <div className='retangle'/>
       <div className='retangle2'/>
             

@@ -111,15 +111,22 @@ export const AppProvider = ({ children }) => {
         console.log('ccurrrrrrrrrrrenttttttttttt userrrrrrrrrr: ',foundUser);
       }
     }
-  }, [emailid]);
+  }, [emailid,data.allUsers]);
 
   // Fetch posts of the logged-in user
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const id = localStorage.getItem('id');
-        const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${id}/timeline`);
-        setPosts(response.data);
+        const ccid = localStorage.getItem('id');
+        console.log('id:::::::::::::::::::::::::::::::::::::::',ccid);
+        const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${ccid}/timeline`);
+        if(response.data.length < 0){
+          setPosts([])
+        }else{
+          setPosts(response.data);
+        }
+       
+        console.log('current user post: ',response.data);
       } catch (error) {
         handleError(error);
       }

@@ -35,7 +35,7 @@ function Login() {
           <div className='FormDivLogin'>
             <form onSubmit={handleSubmit}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h4 style={{ color: 'yellow', fontFamily: '-moz-initial', fontSize: 50 }}> W</h4>
+                <h4 className='font-mono text-5xl text-emerald-500'> W</h4>
               </div>
               <div className='retangle' />
               <div className='retangle2' />
@@ -49,10 +49,10 @@ function Login() {
                 {showPass ? 'Hide Password' : 'Show Password'}
               </a><br /><br />
               <div className='btnDiv'>
-                <button type='submit' className='bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded'>
+                <button type='submit' className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded'>
                   {loading ? 'Loading...' : 'Login'}
                 </button>
-                <Link href='register' className='btn px-1 py-1 btn-secondary'>New here? create</Link>
+                <Link href='register' className='text-cyan-400'>New here? create</Link>
               </div>
             </form>
           </div>

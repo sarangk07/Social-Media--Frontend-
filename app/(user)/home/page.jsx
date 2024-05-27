@@ -95,8 +95,6 @@ export default function Home() {
                         <Link href={`/userProfileView/${item.userId}`}>
                         <img className='rounded-full w-12 h-12' src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745" alt="" />
                         </Link>
-                        
-
                         {data && data.allUsers ? (
                             <>
                               {data.allUsers.filter((x) => x._id === item.userId).map((user) => (
@@ -108,26 +106,9 @@ export default function Home() {
                           ) : (
                             <h4 className='relative left-5'>Unknown User</h4>
                           )}
-
                       </div>
                       <p>{item.desc}</p>
-                      {item.userId == currentUser._id ? (
-                        <>
-                        
-                        </>
-                      ) : (
-                        data.allUsers.map((x) => (
-                          <div key={x._id}>
-                            {x.followers.includes(currentUser._id) ? (
-                              // <UnfollowButton userId={x._id} currentUser={currentUser} />
-                              <></>
-                            ) : (
-                              // <FollowButton userId={x._id} currentUser={currentUser} />
-                              <></>
-                            )}
-                          </div>
-                        ))
-                      )}
+                      
                     </div>
                     <div className='flex justify-center rounded-md relative'>
                       <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
@@ -163,7 +144,7 @@ export default function Home() {
                           {comments.length > 0 ? (
                             <>
                               {comments.map((comment) => (
-                                <div key={comment._id}>
+                                <div key={`${item._id}-${comment._id}`}>
                                   <div className='flex justify-between'>
                                   { comment.userId ? (
                                       <>
@@ -174,10 +155,10 @@ export default function Home() {
                                     )
                                   }
                                     <p>{comment.text}</p>
-                                    <div className='flex justify-evenly'>
+                                    {/* <div className='flex justify-evenly'>
                                       <EditCMTButton commentId={comment._id} postId={item._id} />
                                       <CmtDeleteBTN commentId={comment._id} postId={item._id} />
-                                    </div>
+                                    </div> */}
                                   </div>
                                   <hr />
                                 </div>
@@ -227,22 +208,7 @@ export default function Home() {
                             <p>{item.desc}</p>
 
                           </div>
-                          {item.userId == currentUser._id ? (
-                    
-                            <></>
-                          ) : (
-                            data.allUsers.map((x) => (
-                              <div key={x._id}>
-                                {x.followers.includes(currentUser._id) ? (
-                                  // <UnfollowButton userId={x._id} currentUser={currentUser} />
-                                  <></>
-                                ) : (
-                                  // <FollowButton userId={x._id} currentUser={currentUser} />
-                                  <></>
-                                )}
-                              </div>
-                            ))
-                          )}
+                          
                         </div>
                         <div className='flex justify-center relative'>
                           <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
@@ -275,22 +241,23 @@ export default function Home() {
                               )}
                               {comments.length > 0 ? (
                                 <>
-                                  {comments.map((comment) => (
-                                    <div key={comment._id}>
+                                  {comments.map((commentss) => (
+                                    <div key={`${item._id}-${commentss._id}`}>
                                       <div className='flex justify-between'>
-                                      { comment.userId ? (
+                                      { commentss.userId ? (
                                 <>
-                                  {data.allUsers.find(x => x._id === comment.userId)?.username}
+                                  {data.allUsers.find(x => x._id === commentss.userId)?.username}
                                 </>
                               ) : (
                                 <></>
                               )
                             }
-                            <p>{comment.text}</p>
-                              <div className='flex justify-evenly'>
-                                <EditCMTButton commentId={comment._id} postId={item._id} />
-                                  <CmtDeleteBTN commentId={comment._id} postId={item._id} />
-                              </div>
+                            <p>{commentss.text}</p>
+                            
+                              {/* <div className='flex justify-evenly'>
+                                <EditCMTButton commentId={commentss._id} postId={item._id} />
+                                  <CmtDeleteBTN commentId={commentss._id} postId={item._id} />
+                              </div> */}
                               </div>
                               <hr />
                             </div>
@@ -326,7 +293,7 @@ export default function Home() {
 
             {posts && posts.length > 0 ? (
               <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>
-                {posts.map((item) => (
+                {posts.filter((item) => item.userId === currentUser._id).map((item) => (
                   <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
                     <div className="flex justify-between items-center">
                       <div className='flex flex-col'>
@@ -337,22 +304,7 @@ export default function Home() {
                         <p>{item.desc}</p>
 
                       </div>
-                      {item.userId == currentUser._id ? (
-                
-                        <></>
-                      ) : (
-                        data.allUsers.map((x) => (
-                          <div key={x._id}>
-                            {x.followers.includes(currentUser._id) ? (
-                              // <UnfollowButton userId={x._id} currentUser={currentUser} />
-                              <></>
-                            ) : (
-                              // <FollowButton userId={x._id} currentUser={currentUser} />
-                              <></>
-                            )}
-                          </div>
-                        ))
-                      )}
+                      
                     </div>
                     <div className='flex justify-center relative'>
                       <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
@@ -385,21 +337,21 @@ export default function Home() {
                           )}
                           {comments.length > 0 ? (
                             <>
-                              {comments.map((comment) => (
-                                <div key={comment._id}>
+                              {comments.map((commentz) => (
+                                <div key={`${item._id}-${commentz._id}`}>
                                   <div className='flex justify-between'>
-                                  { comment.userId ? (
+                                  { commentz.userId ? (
                             <>
-                              {data.allUsers.find(x => x._id === comment.userId)?.username}
+                              {data.allUsers.find(x => x._id === commentz.userId)?.username}
                             </>
                           ) : (
                             <></>
                           )
                         }
-                        <p>{comment.text}</p>
+                        <p>{commentz.text}</p>
                           <div className='flex justify-evenly'>
-                            <EditCMTButton commentId={comment._id} postId={item._id} />
-                              <CmtDeleteBTN commentId={comment._id} postId={item._id} />
+                            <EditCMTButton commentId={commentz._id} postId={item._id} />
+                              <CmtDeleteBTN commentId={commentz._id} postId={item._id} />
                             </div>
                           </div>
                           <hr />
