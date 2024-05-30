@@ -11,15 +11,34 @@ import EditCMTButton from '../components/editCMTbutton';
 import CmtDeleteBTN from '../components/deleteCMTbutton';
 import LikeBtn from '../components/likeBTN';
 
+import { useRouter } from 'next/navigation'; 
+
 
 
 export default function Home() {
-  const { data, currentUser, allposts, loading,posts,comments, fetchComments, createComment ,user,followedPosts} = useContext(AppContext);
+  const [id, setId] = useState(null);
+
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+    }else{
+      setId(localStorage.getItem('id'))
+    }
+  }, []);
+
+
+  const { data, currentUser, allposts, loading,posts,comments, fetchComments, createComment ,followedPosts} = useContext(AppContext);
   const fieldArray = ['discover', 'followers', 'mypost']
 
   const [openCMT, setOpenCMT] = useState(false);
   const [createCMT, setCreateCMT] = useState('');
-  const [field,setField] = useState(fieldArray[0])
+  const [field,setField] = useState(fieldArray[0]);
+  
+
+
+  
 
   
 
@@ -46,7 +65,7 @@ export default function Home() {
         <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
           <p>Recommended Users</p>
           {data.lusers?<>
-          {data.lusers.map((x) => (
+          {data.lusers.filter((x)=>x._id != id).map((x) => (
             <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4' key={x._id}>
               <div className='w-1/3'>
                 <Link href={`/userProfileView/${x._id}`}>
@@ -143,6 +162,7 @@ export default function Home() {
                           )}
                           {comments.length > 0 ? (
                             <>
+                            {console.log('comments : ',comments)}
                               {comments.map((comment) => (
                                 <div key={`${item._id}-${comment._id}`}>
                                   <div className='flex justify-between'>
@@ -204,7 +224,18 @@ export default function Home() {
                             <Link href={`/userProfileView/${item.userId}`}>
                             <img className='rounded-full w-12 h-12' src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745" alt="" />
                             </Link>
-                            <h4 className='relative left-5'>{item._id}</h4><br />
+                            {data && data.allUsers ? (
+                            <>
+                              {data.allUsers.filter((x) => x._id === item.userId).map((user) => (
+                                <h4 className='relative left-5' key={user._id}>
+                                  {user.username}
+                                </h4>
+                              ))}
+                            </>
+                            ) : (
+                              <h4 className='relative left-5'>Unknown User</h4>
+                            )}
+                            <br />
                             <p>{item.desc}</p>
 
                           </div>
@@ -233,10 +264,12 @@ export default function Home() {
                               />
                               {createCMT && (
                                 <button
-                                  className="rounded-sm inline-block bg-teal-800 text-white w-8"
+                                  className='pl-3 relative top-1.5'
                                   onClick={() => handleCreateCMT(item._id)}
                                 >
-                                  Sent
+                                <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                </svg>
                                 </button>
                               )}
                               {comments.length > 0 ? (
@@ -349,10 +382,10 @@ export default function Home() {
                           )
                         }
                         <p>{commentz.text}</p>
-                          <div className='flex justify-evenly'>
+                          {/* <div className='flex justify-evenly'>
                             <EditCMTButton commentId={commentz._id} postId={item._id} />
                               <CmtDeleteBTN commentId={commentz._id} postId={item._id} />
-                            </div>
+                            </div> */}
                           </div>
                           <hr />
                           </div>

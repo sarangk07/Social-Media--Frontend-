@@ -1,12 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
 import './style.css';
 import AppContext from '@/app/context/myContext'; 
 import toast, { Toaster } from 'react-hot-toast';
 
+import { useRouter } from 'next/navigation'; 
+
+
 function Login() {
+
+
+
+  
+    const router = useRouter(); 
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        router.push('/home');
+      }
+    }, []);
+
+
   const { login, loading } = useContext(AppContext);
   const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState('');
@@ -35,7 +51,7 @@ function Login() {
           <div className='FormDivLogin'>
             <form onSubmit={handleSubmit}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h4 className='font-mono text-5xl text-emerald-500'> W</h4>
+                <h4 className='font-mono text-5xl text-emerald-500'>VM</h4>
               </div>
               <div className='retangle' />
               <div className='retangle2' />

@@ -6,7 +6,6 @@ import React from 'react';
 
 function PostDeleteBTN({ postId }) {
     const handleDelete = async () => {
-        
 
         try {
             const id = localStorage.getItem('id');

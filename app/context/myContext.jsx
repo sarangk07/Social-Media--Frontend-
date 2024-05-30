@@ -85,6 +85,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+
         const response = await axios.get('https://social-media-5ukj.onrender.com/user/');
         const allUsers = response.data;
         const shuffledUsers = allUsers.sort(() => Math.random() - 0.5);
@@ -136,12 +137,13 @@ export const AppProvider = ({ children }) => {
     }
   }, [currentUser]);
 
-  // Fetch all posts
+  // Fetch all posts, except current user post
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
+        const id = localStorage.getItem('id')
         const requests = data.allUsers
-          .filter(user => user._id !== '6646f9633ce360059d6ea7d5')
+          .filter(user => user._id !== '6646f9633ce360059d6ea7d5' && user._id !== id)
           .map(user => axios.get(`https://social-media-5ukj.onrender.com/posts/${user._id}/timeline`));
 
         const responses = await Promise.all(requests);
@@ -185,7 +187,7 @@ export const AppProvider = ({ children }) => {
 
 
 
-  // Fetch comments for a specific post
+  // Fetch comments form a specific post
   const fetchComments = async (postId) => {
     try {
       const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${postId}/comments`);

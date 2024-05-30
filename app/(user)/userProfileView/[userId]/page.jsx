@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-
+import LikeBtn from '../../components/likeBTN';
+import AppContext from '@/app/context/myContext';
 
 
 
@@ -14,13 +15,35 @@ const UserProfile = (params) => {
   const [followersFetched, setFollowersFetched] = useState(false);
   const[followedUsers,setFollowedUsers]=useState([]);
   const[post,setPosts]= useState([]);
+  const [openCMT, setOpenCMT] = useState(false);
+  const {fetchComments,createComment,comments,data} = useContext(AppContext)
+  const [createCMT, setCreateCMT] = useState('');
+
+  
+
+
+  
+
+  
+
+  
+ 
+
   
   // console.log(params.params.userId,'sdddddddddddddddddddd');
  useEffect(()=>{
   setID(params.params.userId)
  },[params])
-  
 
+ const commentClick = (postId) => {
+  fetchComments(postId);
+  setOpenCMT((prevState) => (prevState === postId ? null : postId));
+};
+  
+const handleCreateCMT = (postId) => {
+  createComment(postId, createCMT);
+  setCreateCMT('');
+};
 
  console.log(id,': use');
 
@@ -70,7 +93,7 @@ const getFollowersProfile = () => {
 useEffect(() => {
   const getPosts = async () => {
     try {
-      if (id !== null) { // Check if id is not null before making the request
+      if (id !== null) {
         console.log(id, ': user idddddddddddddddddddddddddddddddddddddd11111111111111111111');
         console.log(userV, 'clicked user id//////////////////////');
         const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${id}/timeline`);
@@ -84,10 +107,7 @@ useEffect(() => {
         }        
       }
     } catch (error) {
-      console.log(error.response, 'get error');
-      if (error.response.status == 500) {
-        console.log('server error');
-      }
+      console.log(error.response, 'get error'); 
     }
   };
   getPosts();
@@ -140,7 +160,7 @@ console.log(followedUsers,'---------------------------followedUsers------------*
         </div>
     </div>
     <div className=' flex justify-around h-4/6 w-screen bg-[#D9D9D9]'>
-      <div className='md:flex w-2/5 flex flex-col md:justify-center bg-[#FFFFFF] m-1 rounded-2xl sm:hidden '>
+      <div className='md:flex w-2/5 flex-col md:justify-center bg-[#FFFFFF] m-1 rounded-2xl hidden '>
       {followedUsers.length > 0 ?
       followedUsers.map((followedUser, index) => (
         <div>
@@ -156,7 +176,7 @@ console.log(followedUsers,'---------------------------followedUsers------------*
       
       
       </div>
-      <div className='w-3/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div className='w-4/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       <div className='flex justify-evenly m-3 '>
         <h3 className='active: text-orange-600 pb-3 mb-3' >
         
@@ -181,10 +201,63 @@ console.log(followedUsers,'---------------------------followedUsers------------*
   <div className='flex justify-center relative '><img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt=""/> </div>
   
   <div className='flex justify-around mb-5'>
-    <button>likes: </button>
-    <button>comment</button>
-    <button>share</button>
-  </div>
+        <div className='flex '>
+            <LikeBtn postID={item._id} />
+      
+        </div>
+        <button onClick={() => commentClick(item._id)}>comment</button>
+        <button>share</button>
+      </div>
+
+      {openCMT === item._id ? (
+          <div className='pl-4 pr-4'>
+            <input
+              type="text"
+              value={createCMT || ''}
+              onChange={(e) => setCreateCMT(e.target.value)}
+              placeholder="comment..."
+              className="text-gray-700 border-none rounded-md animate-pulse"
+            />
+            {createCMT && (
+              <button
+                className='pl-3 relative top-1.5'
+                onClick={() => handleCreateCMT(item._id)}
+              >
+                <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                </svg>
+              </button>
+            )}
+            {comments.length > 0 ? (
+              <>
+              {console.log('comments : ',comments)}
+                {comments.map((comment) => (
+                  <div key={`${item._id}-${comment._id}`}>
+                    <div className='flex justify-between'>
+                    { comment.userId ? (
+                        <>
+                          {data.allUsers.find(x => x._id === comment.userId)?.username}
+                        </>
+                      ) : (
+                        <></>
+                      )
+                    }
+                      <p>{comment.text}</p>
+                      {/* <div className='flex justify-evenly'>
+                        <EditCMTButton commentId={comment._id} postId={item._id} />
+                        <CmtDeleteBTN commentId={comment._id} postId={item._id} />
+                      </div> */}
+                    </div>
+                    <hr />
+                  </div>
+                ))}
+              </>
+            ) : (
+              <p>No comments found!</p>
+            )}
+            <hr />
+          </div>
+        ) : null}
   <hr className='mb-8'/>
 </div>
 ))}
