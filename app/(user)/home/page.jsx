@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState,useRef } from 'react';
 import AppContext from '@/app/context/myContext';
 import Navbar from '@/app/components/Navbar';
 import Link from 'next/link';
@@ -10,14 +10,14 @@ import UnfollowButton from '../components/unFollowBtn';
 import EditCMTButton from '../components/editCMTbutton';
 import CmtDeleteBTN from '../components/deleteCMTbutton';
 import LikeBtn from '../components/likeBTN';
-
+import { gsap } from 'gsap';
 import { useRouter } from 'next/navigation'; 
 
 
 
 export default function Home() {
   const [id, setId] = useState(null);
-
+  const recommendedUsersRef = useRef([]);
   const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -53,6 +53,20 @@ export default function Home() {
   };
 
 
+  //GSAP Animation----------------
+  useEffect(() => {
+    if (data.lusers) {
+      gsap.to(recommendedUsersRef.current, {
+        opacity: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: 'power1.out',
+      });
+    }
+  }, [data.lusers]);
+
+
   if (loading) {
     return toast.loading('Loading...');
   }
@@ -65,8 +79,16 @@ export default function Home() {
         <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
           <p>Recommended Users</p>
           {data.lusers?<>
-          {data.lusers.filter((x)=>x._id != id).map((x) => (
-            <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4' key={x._id}>
+          {data.lusers.filter((x)=>x._id != id).map((x,index) => (
+
+
+            <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4'
+             key={x._id} 
+             ref={el => recommendedUsersRef.current[index] = el}
+             style={{ opacity: 0, transform: 'translateY(20px)' }}
+             >
+
+
               <div className='w-1/3'>
                 <Link href={`/userProfileView/${x._id}`}>
                   <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-300 flex items-center justify-center">
@@ -90,13 +112,13 @@ export default function Home() {
         }
           
         </div>
-        <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-5 h-full'>
-          <div className='m-5 flex justify-around'>
+        <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-1 h-full'>
+          <div className='m-2 flex justify-around'>
             <button href="" onClick={()=>setField(fieldArray[1])} className='focus:text-emerald-500'>followers</button>
             <button href="" onClick={()=>setField(fieldArray[0])} className='focus:text-emerald-500'>discover</button>
             <button href="" onClick={()=>setField(fieldArray[2])} className='focus:text-emerald-500'>mypost</button>
           </div>
-          <div className='m-6 h-screen overflow-y-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className='m-3 h-screen overflow-y-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
            
            
            {field == 'discover'?
@@ -126,6 +148,7 @@ export default function Home() {
                             <h4 className='relative left-5'>Unknown User</h4>
                           )}
                       </div>
+                      <br />
                       <p>{item.desc}</p>
                       
                     </div>
@@ -219,8 +242,10 @@ export default function Home() {
             <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>
                     {followedPosts.map((item) => (
                       <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
-                        <div className="flex justify-between items-center">
-                          <div className='flex flex-col'>
+
+
+                        <div className="flex flex-col justify-between">
+                          <div className='flex'>
                             <Link href={`/userProfileView/${item.userId}`}>
                             <img className='rounded-full w-12 h-12' src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745" alt="" />
                             </Link>
@@ -231,16 +256,18 @@ export default function Home() {
                                   {user.username}
                                 </h4>
                               ))}
+                              
                             </>
                             ) : (
                               <h4 className='relative left-5'>Unknown User</h4>
                             )}
-                            <br />
-                            <p>{item.desc}</p>
-
+                            
                           </div>
+                            <br />
+                          <p>{item.desc}</p>
                           
                         </div>
+                    
                         <div className='flex justify-center relative'>
                           <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
                         </div>

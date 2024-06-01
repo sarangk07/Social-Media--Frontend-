@@ -5,6 +5,8 @@ import React, { useEffect, useState ,useRef} from 'react'
 
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 function Navbar() {
     const[user,setUser]=useState(null)
@@ -44,10 +46,40 @@ function Navbar() {
       const handleBlur = () => {
           clickPoint.current.style.display = "block";
       };
+
+
+
+
+ 
+  const virtualRef = useRef();
+  const mingleRef = useRef();
+
+
+  useGSAP(() => {
+    gsap.from(virtualRef.current, { y: -50, opacity: 0, duration: 1 });
+    gsap.from(mingleRef.current, { y: 50, opacity: 0, duration: 1 });
+  });
+  useEffect(() => {
+    gsap.from('.navbar', { backgroundColor: 'transparent', duration: 1 });
+    gsap.to('.navbar', { backgroundColor: 'white', duration: 1 });
+  }, []);
+
+
+  
+  
+
+
+
   return (
-    <div className='flex w-full h-4/5 bg-white items-center p-2'>
+    <div className='flex w-full h-4/5 bg-white items-center p-2 navbar'>
       <div className='flex w-2/4 justify-between'>
-        <li className='list-none pl-5'><Link href='home'> Home </Link></li>
+        <li className='list-none pl-5'><Link href='home'>
+        <div className='flex font-semibold bg-gray-50 rounded-sm'>
+              <div ref={virtualRef}>Virtual</div>
+              <div ref={mingleRef} className='ml-2 pl-0.5 pr-0.5 text-white bg-black rounded-e-sm'>Mingle</div>
+            </div>
+           
+           </Link></li>
 
       </div>
         
@@ -61,8 +93,8 @@ function Navbar() {
                     </div>
                     <input
                         type="text"
-                        className="block p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
-                        placeholder="Search Here..."
+                        className="block focus:border-none  border-none p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
+                        placeholder="Search . . ."
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                     />

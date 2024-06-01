@@ -1,6 +1,5 @@
-// import Image from "next/image";
+
 import './style.css'
-// import "./globals.css";
 import Link from 'next/link';
 
 

@@ -5,7 +5,8 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import LikeBtn from '../../components/likeBTN';
 import AppContext from '@/app/context/myContext';
-
+import FollowButton from '../../components/followBTN';
+import UnfollowButton from '../../components/unFollowBtn';
 
 
 const UserProfile = (params) => {
@@ -16,7 +17,7 @@ const UserProfile = (params) => {
   const[followedUsers,setFollowedUsers]=useState([]);
   const[post,setPosts]= useState([]);
   const [openCMT, setOpenCMT] = useState(false);
-  const {fetchComments,createComment,comments,data} = useContext(AppContext)
+  const {fetchComments,createComment,comments,data,currentUser} = useContext(AppContext)
   const [createCMT, setCreateCMT] = useState('');
 
   
@@ -114,6 +115,10 @@ useEffect(() => {
 }, [id]);
 
 
+useEffect(() => {
+  console.log('Current User:', currentUser);
+  console.log('UserV:', userV);
+}, [currentUser, userV]);
 
 
 
@@ -144,7 +149,16 @@ console.log(followedUsers,'---------------------------followedUsers------------*
                     <h5>{userV.username}</h5>
                     <p>{userV.email}</p>
                     </div>
-                    <div className='rounded-md bg-emerald-800 w-14 h-10 text-white cursor-pointer flex items-center justify-center hover:bg-emerald-700'>Follow</div>
+                    {/* <div className='rounded-md bg-emerald-800 w-14 h-10 text-white cursor-pointer flex items-center justify-center hover:bg-emerald-700'>Follow</div> */}
+                    
+                    
+                    {currentUser.followers && currentUser.followers.includes(userV._id) ? (
+                        <UnfollowButton userId={userV._id} currentUser={currentUser} />
+                    ) : (<>
+                        <FollowButton userId={userV._id} currentUser={currentUser} />
+                        {/* <UnfollowButton userId={userV._id} currentUser={currentUser} /> */}
+                        </>
+                    )}
                     
                 </div>
                 
@@ -182,15 +196,15 @@ console.log(followedUsers,'---------------------------followedUsers------------*
         
         </h3>
         {post && post.length > 0 ? (
-<div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
-{post.map((item) => (
-<div className='bg-emerald-50 rounded-xl mb-3' key={item._id}>
-  <div className="flex justify-between items-center">
-    <div className='flex flex-col'>
-      {/* <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" /> */}
-      {/* <h4 className='relative left-5'>{item._id}</h4><br /> */}
-      <p>{item.desc}</p>
-    </div>
+      <div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
+      {post.map((item) => (
+      <div className='bg-emerald-50 rounded-xl mb-3' key={item._id}>
+        <div className="flex justify-between items-center">
+          <div className='flex flex-col'>
+            {/* <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" /> */}
+            {/* <h4 className='relative left-5'>{item._id}</h4><br /> */}
+            <p>{item.desc}</p>
+          </div>
 
 
 

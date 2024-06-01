@@ -45,7 +45,7 @@ console.log(comments, ': comments');
   };
 
   return (
-    <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
+    <div className='flex flex-col w-screen h-screen bg-emerald-100 '>
       <div className='flex flex-col h-2/6 items-center'>
         <div className='w-screen h-2/4 object-cover'>
         
@@ -65,36 +65,50 @@ console.log(comments, ': comments');
           <div className='flex justify-between -mt-16  relative'>
             {currentUser ? (
               <>
-                <div className='flex flex-col justify-evenly w-1/3 top-5 pl-1 -mt-3'>
+                <div className='flex flex-col  justify-evenly w-1/3 top-5 pl-1 -mt-3'>
                   <div>
                     <h5>{currentUser.username}</h5>
                     <p>{currentUser.email}</p>
                   </div>
-                  <div className='flex pl-1'>
-                  <div className='pl-4' >
+                  
+
+
+
+                  
+
+
+                </div>
+
+
+                <div className='flex flex-col relative -top-8 pt-0 pl-1'>
+                  <div>
+                  <div className='flex pr-3 relative top-5'>
+                    <p className='pr-3'>followers: {currentUser.followers ? currentUser.followers.length : 0}</p>
+                    <p>following: {currentUser.following ? currentUser.following.length : 0}</p>
+                  </div>
+                  </div>
+                  <div className='flex pt-4 justify-center'>
+                  <div className='pr-2 pt-2' >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                     </svg>
                   </div>
                   
-                  <Link href='/profile/upload'className='pl-4' >
+                  <Link href='/profile/upload'className='pr-2 pt-2' >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                   </Link>
                   
                   
-                  <Link href='/' onClick={logOut}className='pl-4'>
+                  <Link href='/' onClick={logOut}className='pr-2 pt-2'>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:text-orange-500">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
                     </svg>
                   </Link>
                   </div>
-                </div>
-                <div className='pr-3'>
-                  <p>followers: {currentUser.followers ? currentUser.followers.length : 0}</p>
-                  <p>following: {currentUser.following ? currentUser.following.length : 0}</p>
-                </div>
+                  </div>
+               
               </>
             ) : (
               <div>Loading...</div>
@@ -102,7 +116,7 @@ console.log(comments, ': comments');
           </div>
         </div>
       </div>
-      <div className='flex justify-around h-5/6 w-screen bg-[#D9D9D9] overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div className='flex justify-around h-5/6 w-screen  bg-emerald-100 overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <div className='hidden md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
         <div className=' w-4/5 text-center  bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className='flex flex-col '>
