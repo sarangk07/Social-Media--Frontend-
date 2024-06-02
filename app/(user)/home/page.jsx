@@ -5,8 +5,9 @@ import AppContext from '@/app/context/myContext';
 import Navbar from '@/app/components/Navbar';
 import Link from 'next/link';
 import toast, { Toaster } from 'react-hot-toast';
-import FollowButton from '../components/followBTN';
-import UnfollowButton from '../components/unFollowBtn';
+// import FollowButton from '../components/followBTN';
+// import UnfollowButton from '../components/unFollowBtn';
+import FollowButton from '../components/followUnfollowBTN';
 import EditCMTButton from '../components/editCMTbutton';
 import CmtDeleteBTN from '../components/deleteCMTbutton';
 import LikeBtn from '../components/likeBTN';
@@ -71,13 +72,35 @@ export default function Home() {
     return toast.loading('Loading...');
   }
 
+
+
+
+  
+  const clickPoint = useRef();
+  const handleFocus = () => {
+      clickPoint.current.style.display = "none";
+  };
+
+  const handleBlur = () => {
+      clickPoint.current.style.display = "block";
+  };
+
+
   return (
     <div className='bg-emerald-100 text-gray-700'>
       <Toaster position="top-center" reverseOrder={false} />
       <Navbar />
       <div className='flex w-screen h-screen sm:justify-center'>
+
+
+
+
+
+        {/* -----------suggestion users-------- */}
+
+
         <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
-          <p>Recommended Users</p>
+          <p>Suggestions</p>
           {data.lusers?<>
           {data.lusers.filter((x)=>x._id != id).map((x,index) => (
 
@@ -99,11 +122,12 @@ export default function Home() {
                 </Link>
               </div>
               <p className='w-2/5 overflow-hidden md:flex'>{x.username}</p>
-              {x.followers.includes(currentUser._id) ? (
+              {/* {x.followers.includes(currentUser._id) ? (
                 <UnfollowButton userId={x._id} currentUser={currentUser} />
               ) : (
                 <FollowButton userId={x._id} currentUser={currentUser} />
-              )}
+              )} */}
+              <FollowButton userId={x._id} currentUser={currentUser} />
             </div>
           ))}
           </>
@@ -112,7 +136,41 @@ export default function Home() {
         }
           
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* --------post divs----------- */}
+
+
+
         <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-1 h-full'>
+        <div className="items-center  px-4 flex justify-center" >
+                <div className="relative  mr-3">
+                    <div className="absolute top-3 left-3 items-center" ref={clickPoint}>
+                    <svg className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
+                    </svg>
+                    </div>
+                    <input
+                        type="text"
+                        className="block focus:border-none  border-none p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
+                        placeholder="Search . . ."
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                    />
+                </div>
+            </div>
           <div className='m-2 flex justify-around'>
             <button href="" onClick={()=>setField(fieldArray[1])} className='focus:text-emerald-500'>followers</button>
             <button href="" onClick={()=>setField(fieldArray[0])} className='focus:text-emerald-500'>discover</button>
@@ -444,6 +502,30 @@ export default function Home() {
         }
     </div>
   </div>
+
+
+
+
+
+  {/* ------test-------- */}
+        <div  className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
+          <h3>{currentUser ?
+          <> 
+          <li className='list-none pr-5'><Link href='profile'>
+         
+            <img className='rounded-full w-12 h-12' src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745" alt="" />
+                       
+            </Link>{currentUser.username}</li>
+          <li className='list-none pr-5'>{currentUser.email}</li>
+          </> 
+          : 
+          <li className='list-none pr-5'>profile</li>}
+          </h3>
+          
+        </div>
+
+
+
 </div>
 </div>
   );

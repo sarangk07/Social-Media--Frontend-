@@ -1,56 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useEffect, useState ,useRef} from 'react'
+import React, { useEffect, useState ,useRef, useContext} from 'react';
+import AppContext from '@/app/context/myContext';
 
-import axios from 'axios';
-import toast from 'react-hot-toast';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 
 function Navbar() {
-    const[user,setUser]=useState(null)
-
-
-      useEffect(()=>{
-      
-        const getUsers = async()=>{
-          try{
-            const response = await axios.get('https://social-media-5ukj.onrender.com/user/');
-            const allUsers = await response.data
-
-            // console.log(allUsers,'nav  bar')
-          const localEmail = localStorage.getItem('email') ;
-          // console.log(localEmail,'localEmail')
-          allUsers.map((x)=>{
-              // console.log(x.email);
-              if(x.email === localEmail){
-                // console.log('found')
-                // console.log(x.username)
-                setUser(x)
-              }
-          })
-        // console.log(user)
-          }
-          catch{
-            toast.error('network error')
-          } 
-        }
-        getUsers()
-      },[])
-      const clickPoint = useRef();
-      const handleFocus = () => {
-          clickPoint.current.style.display = "none";
-      };
-  
-      const handleBlur = () => {
-          clickPoint.current.style.display = "block";
-      };
-
-
-
-
- 
+    
+  const {currentUser} = useContext(AppContext)
   const virtualRef = useRef();
   const mingleRef = useRef();
 
@@ -65,16 +24,14 @@ function Navbar() {
   }, []);
 
 
-  
-  
-
-
-
   return (
-    <div className='flex w-full h-4/5 bg-white items-center p-2 navbar'>
-      <div className='flex w-2/4 justify-between'>
+    <div className='flex w-full h-8.5 bg-white items-center p-2 navbar'>
+      <div className='w-2/6 flex justify-start'>
+        change theme
+      </div>
+      <div className='flex w-2/6 justify-center pr-0 ml-0'>
         <li className='list-none pl-5'><Link href='home'>
-        <div className='flex font-semibold bg-gray-50 rounded-sm'>
+        <div className='flex  font-semibold bg-gray-50 rounded-sm'>
               <div ref={virtualRef}>Virtual</div>
               <div ref={mingleRef} className='ml-2 pl-0.5 pr-0.5 text-white bg-black rounded-e-sm'>Mingle</div>
             </div>
@@ -83,28 +40,9 @@ function Navbar() {
 
       </div>
         
-      <div className='w-3/6'>
-          <div className="items-center  px-4 flex justify-center" >
-                <div className="relative  mr-3">
-                    <div className="absolute top-3 left-3 items-center" ref={clickPoint}>
-                    <svg className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
-                    </svg>
-                    </div>
-                    <input
-                        type="text"
-                        className="block focus:border-none  border-none p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
-                        placeholder="Search . . ."
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                    />
-                </div>
-            </div>
-        </div>
-        <div className='flex justify-end w-1/6'>
-            {/* {user?<li>{user}</li>:<li>profile</li>} */}
-            {user ? <li className='list-none pr-5'><Link href='profile'>{user.username}</Link></li> : <li className='list-none pr-5'>profile</li>}
-            
+
+        <div className= 'flex justify-end w-2/6 sm:flex  sm:justify-end md:hidden lg:hidden'>
+            {currentUser ? <li className='list-none pr-5'><Link href='profile'>{currentUser.username}</Link></li> : <li className='list-none pr-5'>profile</li>}
         </div>
         
       
