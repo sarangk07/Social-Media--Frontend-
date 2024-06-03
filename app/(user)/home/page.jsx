@@ -87,7 +87,7 @@ export default function Home() {
 
 
   return (
-    <div className='bg-emerald-100 text-gray-700'>
+    <div className='bg-emerald-100 text-black dark:bg-zinc-900'>
       <Toaster position="top-center" reverseOrder={false} />
       <Navbar />
       <div className='flex w-screen h-screen sm:justify-center'>
@@ -99,13 +99,13 @@ export default function Home() {
         {/* -----------suggestion users-------- */}
 
 
-        <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
+        <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden  dark:bg-black dark:text-white'>
           <p>Suggestions</p>
           {data.lusers?<>
           {data.lusers.filter((x)=>x._id != id).map((x,index) => (
 
 
-            <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4'
+            <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900'
              key={x._id} 
              ref={el => recommendedUsersRef.current[index] = el}
              style={{ opacity: 0, transform: 'translateY(20px)' }}
@@ -114,7 +114,7 @@ export default function Home() {
 
               <div className='w-1/3'>
                 <Link href={`/userProfileView/${x._id}`}>
-                  <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-300 flex items-center justify-center">
+                  <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
                     <span className="text-gray-700 text-xl font-bold">
                       {x.username.charAt(0).toUpperCase()}
                     </span>
@@ -154,7 +154,7 @@ export default function Home() {
 
 
 
-        <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-1 h-full'>
+        <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-1 h-full  dark:bg-black dark:text-white'>
         <div className="items-center  px-4 flex justify-center" >
                 <div className="relative  mr-3">
                     <div className="absolute top-3 left-3 items-center" ref={clickPoint}>
@@ -164,7 +164,7 @@ export default function Home() {
                     </div>
                     <input
                         type="text"
-                        className="block focus:border-none  border-none p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
+                        className="block focus:border-none  border-none p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3 "
                         placeholder="Search . . ."
                         onFocus={handleFocus}
                         onBlur={handleBlur}
@@ -188,7 +188,7 @@ export default function Home() {
           {allposts && allposts.length > 0 ? (
               <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>
                 {allposts.map((item) => (
-                  <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
+                  <div className='bg-emerald-50 rounded-xl mb-8 dark:bg-zinc-900' key={item._id}>
                     <div className="flex flex-col justify-between ">
                       <div className='flex'>
                         <Link href={`/userProfileView/${item.userId}`}>
@@ -256,10 +256,18 @@ export default function Home() {
                                     )
                                   }
                                     <p>{comment.text}</p>
-                                    {/* <div className='flex justify-evenly'>
-                                      <EditCMTButton commentId={comment._id} postId={item._id} />
-                                      <CmtDeleteBTN commentId={comment._id} postId={item._id} />
-                                    </div> */}
+                                    {
+                              currentUser._id == comment.userId ?
+                                <>
+                                  <EditCMTButton commentId={comment._id} postId={item._id} />
+                                  <CmtDeleteBTN commentId={comment._id} postId={item._id} />
+                                </>
+
+                              :
+                            <>
+                                  
+                                </>
+                            }
                                   </div>
                                   <hr />
                                 </div>
@@ -299,7 +307,7 @@ export default function Home() {
           {followedPosts && followedPosts.length > 0 ? (
             <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>
                     {followedPosts.map((item) => (
-                      <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
+                      <div className='bg-emerald-50 rounded-xl mb-8  dark:bg-zinc-900' key={item._id}>
 
 
                         <div className="flex flex-col justify-between">
@@ -372,10 +380,18 @@ export default function Home() {
                             }
                             <p>{commentss.text}</p>
                             
-                              {/* <div className='flex justify-evenly'>
-                                <EditCMTButton commentId={commentss._id} postId={item._id} />
-                                  <CmtDeleteBTN commentId={commentss._id} postId={item._id} />
-                              </div> */}
+                            {
+                          currentUser._id == commentss.userId ?
+                            <>
+                              <EditCMTButton commentId={commentss._id} postId={item._id} />
+                              <CmtDeleteBTN commentId={commentss._id} postId={item._id} />
+                            </>
+
+                              :
+                            <>
+                              
+                            </>
+                        }
                               </div>
                               <hr />
                             </div>
@@ -412,7 +428,7 @@ export default function Home() {
             {posts && posts.length > 0 ? (
               <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>
                 {posts.filter((item) => item.userId === currentUser._id).map((item) => (
-                  <div className='bg-emerald-50 rounded-xl mb-8' key={item._id}>
+                  <div className='bg-emerald-50 rounded-xl mb-8  dark:bg-zinc-900' key={item._id}>
                     <div className="flex justify-between items-center">
                       <div className='flex flex-col'>
                         <Link href={`/userProfileView/${item.userId}`}>
@@ -467,9 +483,20 @@ export default function Home() {
                           )
                         }
                         <p>{commentz.text}</p>
-                          {/* <div className='flex justify-evenly'>
-                            <EditCMTButton commentId={commentz._id} postId={item._id} />
+                        {
+                          currentUser._id == commentz.userId ?
+                            <>
+                              <EditCMTButton commentId={commentz._id} postId={item._id} />
                               <CmtDeleteBTN commentId={commentz._id} postId={item._id} />
+                            </>
+
+                              :
+                            <>
+                              
+                            </>
+                        }
+                          {/* <div className='flex justify-evenly'>
+                            
                             </div> */}
                           </div>
                           <hr />
@@ -508,7 +535,7 @@ export default function Home() {
 
 
   {/* ------test-------- */}
-        <div  className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden'>
+        <div  className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl dark:bg-black dark:text-white bg-white text-center sm:hidden'>
           <h3>{currentUser ?
           <> 
           <li className='list-none pr-5'><Link href='profile'>

@@ -3,8 +3,7 @@ import "./globals.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { AppProvider } from "./context/myContext";
-
-
+import Provider from "./components/Provider"; 
 
 import { Open_Sans,Inter,Montserrat,Poppins   } from 'next/font/google';
 
@@ -26,12 +25,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
-        <AppProvider>
-          {children}
-        </AppProvider>
-        </body>
+        <Provider>
+          <AppProvider>
+            {children}
+          </AppProvider>
+        </Provider>
+      </body>
     </html>
   );
 }

@@ -192,6 +192,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${postId}/comments`);
       setComments(response.data);
+      console.log(response.data);
     } catch (error) {
       handleError(error);
     }

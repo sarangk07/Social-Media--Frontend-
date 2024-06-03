@@ -45,7 +45,7 @@ console.log(comments, ': comments');
   };
 
   return (
-    <div className='flex flex-col w-screen h-screen bg-emerald-100 '>
+    <div className='flex flex-col w-screen h-screen bg-emerald-100 dark:bg-black'>
       <div className='flex flex-col h-2/6 items-center'>
         <div className='w-screen h-2/4 object-cover'>
         
@@ -58,7 +58,7 @@ console.log(comments, ': comments');
             </svg>
           </Link>
         </div>
-        <div className='bg-[#FFFFFF] h-3/4 flex flex-col w-4/5 rounded-b-3xl'>
+        <div className='bg-[#FFFFFF] h-3/4 flex flex-col w-4/5 rounded-b-3xl dark:bg-zinc-800'>
           <div className='pl-1'>
             <img  src=" https://i.pinimg.com/564x/58/bc/a3/58bca38c4d21f72acb56ff32c99831fb.jpg" alt="profilePic" className='rounded-full border-white border-4 w-28 h-28 relative -top-16' />
           </div>
@@ -116,9 +116,9 @@ console.log(comments, ': comments');
           </div>
         </div>
       </div>
-      <div className='flex justify-around h-5/6 w-screen  bg-emerald-100 overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <div className='hidden md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden '>messages</div>
-        <div className=' w-4/5 text-center  bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div className='flex justify-around h-5/6 w-screen  bg-emerald-100 dark:bg-black overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className='hidden md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden  dark:bg-zinc-900'>messages</div>
+        <div className=' w-4/5 text-center  bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto dark:bg-zinc-900' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className='flex flex-col '>
             <div className='flex justify-evenly'>
               <br />
@@ -129,7 +129,7 @@ console.log(comments, ': comments');
                   {posts.filter((item) => item.userId === currentUser._id).map((item) =>
                   
                     
-                      <div className='bg-emerald-50 rounded-xl mb-5' key={item._id}>
+                      <div className='bg-emerald-50 rounded-xl mb-5 dark:bg-zinc-950' key={item._id}>
                         <div className="flex justify-between items-center">
                           <div className='flex flex-col'>
                             <p>{item.desc}</p>                        

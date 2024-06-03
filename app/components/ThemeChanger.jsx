@@ -3,8 +3,11 @@
 import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 
+
+
 export default function ToggleButton() {
   const [darkMode, setDarkMode] = useState(false);
+
 
 
   useEffect(() => {
@@ -35,15 +38,24 @@ export default function ToggleButton() {
   };
 
   return (
-    <button
-      className={`w-32 h-12 flex items-center justify-center rounded-full transition-colors duration-300 dark:bg-gray-700 dark:text-white bg-gray-300 text-black`}
-      onClick={handleClick}
-      style={{ perspective: '1000px' }} // Added for 3D effect
-    >
-      <span className="toggle-text text-lg font-bold block backface-hidden">
-        {darkMode ? 'Light Mode' : 'Dark Mode'}
-      </span>
-    </button>
+    
+      <>
+        {darkMode ? (
+          <button
+          className={`w-16 h-6 flex items-center justify-center rounded-full text-zinc-900 bg-white `}
+          onClick={handleClick}
+          style={{ perspective: '1000px' }}
+        >L</button>
+        
+        ) : (
+          <button
+          className={`w-16 h-6 flex items-center justify-center rounded-full  text-white bg-zinc-900`}
+          onClick={handleClick}
+          style={{ perspective: '1000px' }}
+        >D</button>
+        )}
+      </>
+    
   );
 }
 

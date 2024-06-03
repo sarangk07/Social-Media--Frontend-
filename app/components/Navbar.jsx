@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import React, { useEffect, useState ,useRef, useContext} from 'react';
 import AppContext from '@/app/context/myContext';
+import ToggleButton from './ThemeChanger';
+
 
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -25,15 +27,16 @@ function Navbar() {
 
 
   return (
-    <div className='flex w-full h-8.5 bg-white items-center p-2 navbar'>
-      <div className='w-2/6 flex justify-start'>
+    <div className='flex w-full h-8.5 bg-white items-center p-2   dark:bg-black dark:text-white'>
+      {/* <div className='w-2/6 flex justify-start'>
         change theme
-      </div>
+      </div> */}
+      <ToggleButton/>
       <div className='flex w-2/6 justify-center pr-0 ml-0'>
         <li className='list-none pl-5'><Link href='home'>
-        <div className='flex  font-semibold bg-gray-50 rounded-sm'>
+        <div className='flex  font-semibold bg-gray-50 rounded-sm dark:bg-transparent'>
               <div ref={virtualRef}>Virtual</div>
-              <div ref={mingleRef} className='ml-2 pl-0.5 pr-0.5 text-white bg-black rounded-e-sm'>Mingle</div>
+              <div ref={mingleRef} className='ml-2 pl-0.5 pr-0.5 text-white bg-black dark:text-emerald-500 rounded-e-sm'>Mingle</div>
             </div>
            
            </Link></li>
