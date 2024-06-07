@@ -1,49 +1,38 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-export default function ToggleButton() {
-  const [darkMode, setDarkMode] = useState(false);
+gsap.registerPlugin(ScrollTrigger);
 
+function Demo() {
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    const theme = localStorage.getItem('theme')
-    if(theme === "dark") setDarkMode(true)
-  },[])
+    const container = containerRef.current;
 
-  useEffect(()=>{
-    if(darkMode){
-      document.documentElement.classList.add('dark')
-      localStorage.setItem("theme", "dark")
-    }else{
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem("theme", "light")
-    }
-  },[darkMode])
-
-  const handleClick = () => {
-    setDarkMode(prevMode => !prevMode);
-    gsap.to('.toggle-text', {
-      duration: 0.5,
-      rotationX: 180,
-      ease: 'power1.inOut',
-      onComplete: () => {
-        gsap.set('.toggle-text', { rotationX: 0 });
-      }
+    gsap.to(container, {
+      scrollTrigger: {
+        trigger: container,
+        start: 'top center', // when the top of the trigger hits the center of the viewport
+        end: 'bottom top', // when the bottom of the trigger hits the top of the viewport
+        scrub: true, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+        // enable markers (requires plugin file)
+      },
+      x: 500, // move the element 500px to the right
+      rotation: 360, // rotate the element 360 degrees
+      duration: 2
     });
-  };
+  }, []);
 
   return (
-    <button
-      className={`w-32 h-12 flex items-center justify-center rounded-full transition-colors duration-300 dark:bg-gray-700 dark:text-white bg-gray-300 text-black`}
-      onClick={handleClick}
-      style={{ perspective: '1000px' }} // Added for 3D effect
-    >
-      <span className="toggle-text text-lg font-bold block backface-hidden">
-        {darkMode ? 'Light Mode' : 'Dark Mode'}
-      </span>
-    </button>
+    <div ref={containerRef} style={{ height: '200vh', background: 'lightblue' }}>
+      <div style={{ margin: '0 auto', paddingTop: '100vh', width: '100px', height: '100px', background: 'red' }}>
+        Scroll to animate me
+      </div>
+    </div>
   );
 }
 
+export default Demo;

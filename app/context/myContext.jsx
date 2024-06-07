@@ -143,12 +143,17 @@ export const AppProvider = ({ children }) => {
       try {
         const id = localStorage.getItem('id')
         const requests = data.allUsers
-          .filter(user => user._id !== '6646f9633ce360059d6ea7d5' && user._id !== id)
+          .filter(user => user._id !== '6646f9633ce360059d6ea7d5' && user._id !== '663b108898d7544f8f475a80')
           .map(user => axios.get(`https://social-media-5ukj.onrender.com/posts/${user._id}/timeline`));
 
         const responses = await Promise.all(requests);
         const allPosts = responses.flatMap(response => response.data);
-        setAllPosts(allPosts);
+
+       
+        const excludedDescriptions = ['any Description', 'Any description'];
+        const filterPost = allPosts.filter(x => !excludedDescriptions.includes(x.desc));
+
+        setAllPosts(filterPost);
         console.log('all posts :',allPosts);
       } catch (error) {
         handleError(error);

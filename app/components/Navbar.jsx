@@ -20,10 +20,10 @@ function Navbar() {
     gsap.from(virtualRef.current, { y: -50, opacity: 0, duration: 1 });
     gsap.from(mingleRef.current, { y: 50, opacity: 0, duration: 1 });
   });
-  useEffect(() => {
-    gsap.from('.navbar', { backgroundColor: 'transparent', duration: 1 });
-    gsap.to('.navbar', { backgroundColor: 'white', duration: 1 });
-  }, []);
+  // useEffect(() => {
+  //   gsap.from('.navbar', { backgroundColor: 'transparent', duration: 1 });
+  //   gsap.to('.navbar', { backgroundColor: 'white', duration: 1 });
+  // }, []);
 
 
   return (

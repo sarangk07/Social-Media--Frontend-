@@ -65,22 +65,15 @@ console.log(comments, ': comments');
           <div className='flex justify-between -mt-16  relative'>
             {currentUser ? (
               <>
-                <div className='flex flex-col  justify-evenly w-1/3 top-5 pl-1 -mt-3'>
+                <div className='flex flex-col  justify-evenly w-1/3 top-5 pl-1 -mt-3 text-black dark:text-white'>
                   <div>
                     <h5>{currentUser.username}</h5>
                     <p>{currentUser.email}</p>
                   </div>
-                  
-
-
-
-                  
-
-
                 </div>
 
 
-                <div className='flex flex-col relative -top-8 pt-0 pl-1'>
+                <div className='flex flex-col relative -top-8 pt-0 pl-1 text-black dark:text-white'>
                   <div>
                   <div className='flex pr-3 relative top-5'>
                     <p className='pr-3'>followers: {currentUser.followers ? currentUser.followers.length : 0}</p>

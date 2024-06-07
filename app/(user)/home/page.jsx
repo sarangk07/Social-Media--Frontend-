@@ -20,6 +20,28 @@ export default function Home() {
   const [id, setId] = useState(null);
   const recommendedUsersRef = useRef([]);
   const router = useRouter();
+
+  
+  const { data, currentUser, allposts, loading,posts,comments, fetchComments, createComment ,followedPosts} = useContext(AppContext);
+  const fieldArray = ['discover', 'followers', 'mypost']
+
+  const [openCMT, setOpenCMT] = useState(false);
+  const [createCMT, setCreateCMT] = useState('');
+  const [field,setField] = useState(fieldArray[0]);
+  const [fUsers,setFusers] = useState('default');
+
+  const [changes, setChange] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const searchInputContainer = useRef(null);
+  const clickPoint = useRef();
+  const [isFocused, setIsFocused] = useState(false); 
+
+  const [followersU, setFollowersU] = useState([]);
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [followingU, setFollowingU] = useState([]);
+  const [showFollowing, setShowFollowing] = useState(false);
+
+  //Auth--------------
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -30,19 +52,52 @@ export default function Home() {
   }, []);
 
 
-  const { data, currentUser, allposts, loading,posts,comments, fetchComments, createComment ,followedPosts} = useContext(AppContext);
-  const fieldArray = ['discover', 'followers', 'mypost']
 
-  const [openCMT, setOpenCMT] = useState(false);
-  const [createCMT, setCreateCMT] = useState('');
-  const [field,setField] = useState(fieldArray[0]);
+  //-------search functionalities---------
+  const SearchClick = () => {
+    if (changes.trim() !== '') {
+      const filtered = data.allUsers.filter((user) =>
+        user.username.toLowerCase().includes(changes.toLowerCase())
+      );
+      setFilteredUsers(filtered);
+    } else {
+      setFilteredUsers([]);
+    }
+  };
+
+  const handleOutsideClick = (event) => {
+    if (
+      searchInputContainer.current &&
+      !searchInputContainer.current.contains(event.target)
+    ) {
+      setFilteredUsers([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
+
+  const handleFocus = () => {
+    clickPoint.current.style.display = "none";
+    setIsFocused(true);
+
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      clickPoint.current.style.display = 'block';
+      setIsFocused(false);
+    }, 200);
+  };
+
+
+
   
-
-
-  
-
-  
-
+//comment functionalities-----------------
   const commentClick = (postId) => {
     fetchComments(postId);
     setOpenCMT((prevState) => (prevState === postId ? null : postId));
@@ -52,6 +107,8 @@ export default function Home() {
     createComment(postId, createCMT);
     setCreateCMT('');
   };
+
+
 
 
   //GSAP Animation----------------
@@ -65,7 +122,33 @@ export default function Home() {
         ease: 'power1.out',
       });
     }
-  }, [data.lusers]);
+  },[data.lusers]);
+
+
+
+
+//followers/following user display
+const handleShowFollowers = () => {
+  setFusers('followers');
+  if (currentUser && currentUser.followers && data.allUsers) {
+    const followersId = currentUser.followers;
+    const foundUsers = data.allUsers.filter(user => followersId.includes(user._id));
+    setFollowersU(foundUsers);
+    console.log('followers', foundUsers);
+    setShowFollowers(true);
+  }
+};
+const handleShowFollowing = () => {
+  setFusers('following');
+  if (currentUser && currentUser.following && data.allUsers) {
+    const followingId = currentUser.following;
+    const foundUsers = data.allUsers.filter(user => followingId.includes(user._id));
+    setFollowingU(foundUsers);
+    console.log('following', foundUsers);
+    setShowFollowing(true);
+  }
+};
+
 
 
   if (loading) {
@@ -73,103 +156,157 @@ export default function Home() {
   }
 
 
-
-
-  
-  const clickPoint = useRef();
-  const handleFocus = () => {
-      clickPoint.current.style.display = "none";
-  };
-
-  const handleBlur = () => {
-      clickPoint.current.style.display = "block";
-  };
-
-
   return (
     <div className='bg-emerald-100 text-black dark:bg-zinc-900'>
-      <Toaster position="top-center" reverseOrder={false} />
-      <Navbar />
-      <div className='flex w-screen h-screen sm:justify-center'>
+    <Toaster position="top-center" reverseOrder={false} />
+    <Navbar />
+    <div className='flex w-screen h-screen sm:justify-center'>
+
+    {/* -----------suggestion users-------- */}
 
 
-
-
-
-        {/* -----------suggestion users-------- */}
-
-
-        <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden  dark:bg-black dark:text-white'>
-          <p>Suggestions</p>
-          {data.lusers?<>
-          {data.lusers.filter((x)=>x._id != id).map((x,index) => (
-
-
-            <div className='flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900'
-             key={x._id} 
-             ref={el => recommendedUsersRef.current[index] = el}
-             style={{ opacity: 0, transform: 'translateY(20px)' }}
-             >
-
-
-              <div className='w-1/3'>
-                <Link href={`/userProfileView/${x._id}`}>
+    <div className='md:flex md:flex-col hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden  dark:bg-black dark:text-white'>
+    {fUsers === 'default' ? (
+      <>
+        <p>Suggestions</p>
+        {data?.lusers ? (
+          <>
+            {data.lusers.filter((x) => x._id !== id).map((x, index) => (
+              <div
+                className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900"
+                key={x._id}
+                ref={(el) => (recommendedUsersRef.current[index] = el)}
+                style={{ opacity: 0, transform: 'translateY(20px)' }}
+              >
+                <div className="w-1/3">
+                  <Link href={`/userProfileView/${x._id}`}>
+                    <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
+                      <span className="text-gray-700 text-xl font-bold">
+                        {x.username.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+                <p className="w-2/5 overflow-hidden md:flex">{x.username}</p>
+                <FollowButton userId={x._id} currentUser={currentUser} />
+              </div>
+            ))}
+          </>
+        ) : (
+          <div className="flex animate-pulse">Loading.....</div>
+        )}
+     </>
+    ) : fUsers === 'followers' ? (
+      <>
+        <p>Followers</p>
+        {showFollowers && (
+          <div>
+            {followersU.map(user => ( 
+              <div key={user._id} className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900">
+                
+              <div className="w-1/3">
+                <Link href={`/userProfileView/${user._id}`}>
                   <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
                     <span className="text-gray-700 text-xl font-bold">
-                      {x.username.charAt(0).toUpperCase()}
+                      {user.username.charAt(0).toUpperCase()}
                     </span>
                   </div>
                 </Link>
               </div>
-              <p className='w-2/5 overflow-hidden md:flex'>{x.username}</p>
-              {/* {x.followers.includes(currentUser._id) ? (
-                <UnfollowButton userId={x._id} currentUser={currentUser} />
-              ) : (
-                <FollowButton userId={x._id} currentUser={currentUser} />
-              )} */}
-              <FollowButton userId={x._id} currentUser={currentUser} />
-            </div>
-          ))}
-          </>
-        :
-        <div className='flex animate-pulse'>Loading.....</div>
-        }
-          
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
+              <p className="w-2/5 overflow-hidden md:flex">{user.username}</p>
+              <FollowButton userId={user._id} currentUser={currentUser} />
+           
+              </div>
+            ))}
+          </div>
+        )}
+      
+      </>
+    ) : (
+      <>
+        <h1>Following</h1>
+        {showFollowing && (
+          <div>
+            {followingU.map(user => ( 
+              <div key={user._id} className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900">
+                
+              <div className="w-1/3">
+                <Link href={`/userProfileView/${user._id}`}>
+                  <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
+                    <span className="text-gray-700 text-xl font-bold">
+                      {user.username.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                </Link>
+              </div>
+              <p className="w-2/5 overflow-hidden md:flex">{user.username}</p>
+              <FollowButton userId={user._id} currentUser={currentUser} />
+           
+              </div>
+            ))}
+          </div>
+        )}
+        
+      </>
+    )}
+    </div>
 
 
         {/* --------post divs----------- */}
 
 
-
-        <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-1 h-full  dark:bg-black dark:text-white'>
+        <div className='bg-white w-full flex flex-col rounded-2xl m-2 p-1 h-full  dark:bg-black dark:text-white overflow-hidden'>
         <div className="items-center  px-4 flex justify-center" >
-                <div className="relative  mr-3">
-                    <div className="absolute top-3 left-3 items-center" ref={clickPoint}>
-                    <svg className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
-                    </svg>
-                    </div>
-                    <input
-                        type="text"
-                        className="block focus:border-none  border-none p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3 "
-                        placeholder="Search . . ."
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
+        <div className="relative mr-3" ref={searchInputContainer}>
+                <div className="absolute top-3 left-3 items-center" ref={clickPoint}>
+                  <svg
+                    className="w-5 h-5 text-gray-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clipRule="evenodd"
                     />
+                  </svg>
                 </div>
+                <input
+                  type="text"
+                  id="search-input"
+                  className="block focus:border-none  border-none p-2 pl-10 w-24 md:w-72 lg:w-72 xl:w-72 text-emerald-600 bg-gray-50 rounded-lg border border-gray-300 focus:pl-3"
+                  placeholder="Search . . ."
+                  value={changes}
+                  onChange={(e) => {
+                    setChange(e.target.value);
+                    SearchClick();
+                  }}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                />
+
+                {isFocused && filteredUsers.length > 0 && (
+                  <div className="absolute bg-white shadow-md rounded-md mt-2 w-full z-10">
+                    {filteredUsers.map((user) => (
+                      <div
+                        key={user._id}
+                        className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer dark:text-white text-black"
+                      >
+                        <Link href={`/userProfileView/${user._id}`}  key={user._id} passHref>
+                        <img
+                          src="https://ps.w.org/user-avatar-reloaded/assets/icon-128x128.png?rev=2540745"
+                          alt="Profile"
+                          className="w-8 h-8 rounded-full mr-2"
+                        />
+                        
+                        <span className="dark:text-black text-black">{user.username}</span>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           <div className='m-2 flex justify-around'>
             <button href="" onClick={()=>setField(fieldArray[1])} className='focus:text-emerald-500'>followers</button>
@@ -422,7 +559,6 @@ export default function Home() {
              :
 
               <>
-
 {/*----------------------- Current users post display -----------------------*/}
 
             {posts && posts.length > 0 ? (
@@ -544,6 +680,23 @@ export default function Home() {
                        
             </Link>{currentUser.username}</li>
           <li className='list-none pr-5'>{currentUser.email}</li>
+          <div>
+            <div className='flex justify-between'>
+              <div>
+                <div> {currentUser.followers&&currentUser.followers.length}</div>
+                <div className='font-extralight text-sm cursor-pointer' onClick={handleShowFollowers}>followers</div>
+              </div>
+              <div>
+                <div> {currentUser.followers&&currentUser.following.length}</div>
+                <div className='font-extralight text-sm cursor-pointer' onClick={handleShowFollowing}>followings</div>
+              </div>
+            </div>
+            <br />
+            <div>liked posts</div>
+            <div>saved</div>
+            
+
+          </div>
           </> 
           : 
           <li className='list-none pr-5'>profile</li>}

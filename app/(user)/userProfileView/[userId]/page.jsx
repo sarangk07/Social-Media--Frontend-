@@ -5,8 +5,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import LikeBtn from '../../components/likeBTN';
 import AppContext from '@/app/context/myContext';
-import FollowButton from '../../components/followBTN';
-import UnfollowButton from '../../components/unFollowBtn';
+import FollowButton from '../../components/followUnfollowBTN';
 
 
 const UserProfile = (params) => {
@@ -143,7 +142,7 @@ console.log(followedUsers,'---------------------------followedUsers------------*
               </div>
             <div className='flex justify-between pt-14'>
             {userV?<>
-                <div className='flex justify-evenly w-1/3 top-5'>
+                <div className='flex justify-evenly w-1/3 top-5 text-black'>
                     
                     <div>
                     <h5>{userV.username}</h5>
@@ -152,13 +151,13 @@ console.log(followedUsers,'---------------------------followedUsers------------*
                     {/* <div className='rounded-md bg-emerald-800 w-14 h-10 text-white cursor-pointer flex items-center justify-center hover:bg-emerald-700'>Follow</div> */}
                     
                     
-                    {currentUser.followers && currentUser.followers.includes(userV._id) ? (
-                        <UnfollowButton userId={userV._id} currentUser={currentUser} />
-                    ) : (<>
-                        <FollowButton userId={userV._id} currentUser={currentUser} />
-                        {/* <UnfollowButton userId={userV._id} currentUser={currentUser} /> */}
-                        </>
-                    )}
+                    {userV&&currentUser ?
+                    <>
+                    <FollowButton userId={userV._id} currentUser={currentUser}/>
+                    
+                    </>:
+                    <>
+                    </>}
                     
                 </div>
                 
