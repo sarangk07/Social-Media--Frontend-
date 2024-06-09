@@ -76,9 +76,6 @@ const handleSubmit = async (values, { resetForm }) => {
     >
 
       {(formik) => (
-
-
-
       <div className='mainDivLogin flex flex-row justify-center items-center w-full'>
         <div>
         <Toaster
@@ -90,7 +87,6 @@ const handleSubmit = async (values, { resetForm }) => {
       <div className=' bg-black w-2/5 m-0 rounded-custom col-md-6'>
         <img  className='loginimg' src="https://i.pinimg.com/originals/d3/9a/0d/d39a0daf8440e7c1e985f448497c550b.jpg" alt="" />
       </div>
-      
       <div className='FormDivLogin w-4/6 flex flex-row justify-center items-center' >
       <div className='retangle'/>
       <div className='retangle2'/>
@@ -98,7 +94,6 @@ const handleSubmit = async (values, { resetForm }) => {
           
          
           <Form action="">
-
             <h4 className='font-serif text-balance'>Get Start With <span style={{color:'yellow', fontSize:40}}> W</span></h4><br />
             <h2 className='text-gray-200'>Create</h2><hr /><br />
 
@@ -121,17 +116,13 @@ const handleSubmit = async (values, { resetForm }) => {
             <div className='btnDiv'>
               <button type='submit' disabled={!formik.isValid || formik.isSubmitting} className='px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-600'>Create</button><Link href='login' className='px-1 py-1 btn btn-secondary'>Have account? login</Link>
             </div>
-            
-
           </Form>
         
+
       </div>
       </div>
     </div>
-
-
       )}
-
     </Formik>
    
   )

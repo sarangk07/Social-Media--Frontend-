@@ -9,7 +9,7 @@ const FollowButton = ({ userId, currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Check if the current user is following the target user
+    // Checking user is already following
     const isUserFollowing =
       currentUser && currentUser.following
         ? currentUser.following.includes(userId)
@@ -26,7 +26,6 @@ const FollowButton = ({ userId, currentUser }) => {
       const url = isFollowing
         ? `https://social-media-5ukj.onrender.com/user/${userId}/unfollow`
         : `https://social-media-5ukj.onrender.com/user/${userId}/follow`;
-
       const authToken = localStorage.getItem('token');
       const config = {
         headers: {
@@ -49,7 +48,6 @@ const FollowButton = ({ userId, currentUser }) => {
 
   return (
     <>
-      {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <button
         className={`rounded-md p-2 hover:text-black ${
           isFollowing ? 'bg-orange-300' : 'bg-emerald-300'

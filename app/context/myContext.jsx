@@ -21,6 +21,9 @@ export const AppProvider = ({ children }) => {
   const [followedPosts, setFollowedPosts] = useState([]);
   const [comments, setComments] = useState([]);
 
+
+
+
   // Login
   const login = async (email, password) => {
     setLoading(true);
@@ -63,6 +66,9 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+
+
+
 //error handling
   const handleError = (error) => {
     if (!error.response) {
@@ -80,6 +86,9 @@ export const AppProvider = ({ children }) => {
       }
     }
   };
+
+
+
 
   // Fetch all users and random users
   useEffect(() => {
@@ -102,6 +111,9 @@ export const AppProvider = ({ children }) => {
     fetchData();
   }, []);
 
+
+
+
   // Set current user
   useEffect(() => {
     if (data.allUsers && emailid) {
@@ -113,6 +125,10 @@ export const AppProvider = ({ children }) => {
       }
     }
   }, [emailid,data.allUsers]);
+
+
+
+
 
   // Fetch posts of the logged-in user
   useEffect(() => {
@@ -136,6 +152,10 @@ export const AppProvider = ({ children }) => {
       fetchPosts();
     }
   }, [currentUser]);
+
+
+
+
 
   // Fetch all posts, except current user post
   useEffect(() => {
@@ -166,6 +186,8 @@ export const AppProvider = ({ children }) => {
   }, [currentUser]);
 
 
+
+
   //fetch post of followed users
   useEffect(() => {
     const fetchPostsFollowed = async () => {
@@ -175,11 +197,16 @@ export const AppProvider = ({ children }) => {
         );
 
         const responses = await Promise.all(requests);
-        console.log(responses,'fo-data-resp');
+        console.log(responses);
         const allPosts = responses.flatMap(response => response.data);
-        console.log(allPosts,'fo-data-posts');
-        
-        setFollowedPosts(allPosts);
+        console.log(allPosts,'Followed users posts');
+        const cuid = localStorage.getItem('id');
+          if (cuid) {
+            const filterPosts = allPosts.filter(post => post.userId !== cuid);
+            setFollowedPosts(filterPosts);
+          } else {
+            console.error('User ID not found in local storage');
+          }
       } catch (error) {
         console.error('Error fetching followed users posts:', error);
       }
@@ -189,6 +216,8 @@ export const AppProvider = ({ children }) => {
       fetchPostsFollowed();
     }
   }, [currentUser]);
+
+
 
 
 
@@ -203,13 +232,15 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+
+
+
   // Create a new comment
   const createComment = async (postId, text) => {
     if (!text) {
       toast.error('Comment cannot be empty');
       return;
     }
-
     try {
       const uid = localStorage.getItem('id');
       const formdata = new FormData();
@@ -226,12 +257,6 @@ export const AppProvider = ({ children }) => {
       handleError(error);
     }
   };
-
-
-
-
-
-
 
 
   return (

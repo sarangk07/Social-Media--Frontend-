@@ -1,4 +1,7 @@
 'use client'
+//---------------testing page---------------------
+
+
 
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
@@ -15,13 +18,13 @@ function Demo() {
     gsap.to(container, {
       scrollTrigger: {
         trigger: container,
-        start: 'top center', // when the top of the trigger hits the center of the viewport
-        end: 'bottom top', // when the bottom of the trigger hits the top of the viewport
-        scrub: true, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
-        // enable markers (requires plugin file)
+        start: 'top center', 
+        end: 'bottom top', 
+        scrub: true, 
+        
       },
-      x: 500, // move the element 500px to the right
-      rotation: 360, // rotate the element 360 degrees
+      x: 500, 
+      rotation: 360,
       duration: 2
     });
   }, []);

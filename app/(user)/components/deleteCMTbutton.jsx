@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 
-function CmtDeleteBTN({ commentId, postId }) {  // Use destructuring for props
+function CmtDeleteBTN({ commentId, postId }) { 
   const handleDeleteCMT = async () => {
     try {
       const currentUserId = localStorage.getItem('id');
@@ -10,7 +10,7 @@ function CmtDeleteBTN({ commentId, postId }) {  // Use destructuring for props
       const response = await axios.delete(
         `https://social-media-5ukj.onrender.com/posts/${postId}/comment/${commentId}`,
         {
-          data: { userId: currentUserId }  // Use 'data' property to send the userId in the request body
+          data: { userId: currentUserId }
         }
       );
 

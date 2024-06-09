@@ -1,7 +1,6 @@
 
 import "./globals.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 import { AppProvider } from "./context/myContext";
 import Provider from "./components/Provider"; 
 

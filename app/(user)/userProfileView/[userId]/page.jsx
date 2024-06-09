@@ -23,18 +23,15 @@ const UserProfile = (params) => {
 
 
   
+// console.log(params.params.userId,'sdddddddddddddddddddd');
 
-  
-
-  
- 
-
-  
-  // console.log(params.params.userId,'sdddddddddddddddddddd');
+//clicked user id
  useEffect(()=>{
   setID(params.params.userId)
  },[params])
 
+
+ //cmt codes........
  const commentClick = (postId) => {
   fetchComments(postId);
   setOpenCMT((prevState) => (prevState === postId ? null : postId));
@@ -48,6 +45,8 @@ const handleCreateCMT = (postId) => {
  console.log(id,': use');
 
 
+
+ //user profile getting..............
  useEffect(()=>{
   const getUsers = async()=>{
     try{
@@ -58,7 +57,6 @@ const handleCreateCMT = (postId) => {
       // console.log(allUsers,'****************')
       setAllusers(allUsers)
       const foundUser = allUsers.find(x => String(x._id) === String(id));
-      
         if (foundUser) {
           console.log('foun-----------------------------d',foundUser);
           setVUser(foundUser);
@@ -74,7 +72,7 @@ const handleCreateCMT = (postId) => {
 },[id])
 
 
-
+//display followersof that user................
 const getFollowersProfile = () => {
   if (!followersFetched && userV.followers) {
     userV.followers.forEach((followerId) => {
@@ -89,7 +87,7 @@ const getFollowersProfile = () => {
 
 
 
-
+//user post display.....................
 useEffect(() => {
   const getPosts = async () => {
     try {
@@ -114,15 +112,10 @@ useEffect(() => {
 }, [id]);
 
 
-useEffect(() => {
-  console.log('Current User:', currentUser);
-  console.log('UserV:', userV);
-}, [currentUser, userV]);
-
-
-
-
-
+// useEffect(() => {
+//   console.log('Current User:', currentUser);
+//   console.log('UserV:', userV);
+// }, [currentUser, userV]);
 
 
 console.log(followedUsers,'---------------------------followedUsers------------********************');
@@ -130,19 +123,19 @@ console.log(followedUsers,'---------------------------followedUsers------------*
 
 
   return (
-    <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] '>
+    <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] dark:bg-zinc-700 dark:text-white text-black'>
       <Toaster position="top-center" reverseOrder={false} />
-      <div className='flex flex-col h-2/6  items-center'>
+      <div className='flex flex-col h-2/6  items-center dark:bg-zinc-700'>
         <div className='w-screen h-2/4 object-cover'>
             <img className='sm:rounded-b-md relative h-full w-full lg:rounded-b-full' src="https://www.dndspeak.com/wp-content/uploads/2021/04/Temple-1-768x512.jpg" alt="" />
         </div>
-        <div className='bg-[#FFFFFF] h-2/4 flex flex-col w-4/5 rounded-b-3xl'>
+        <div className='bg-[#FFFFFF] h-2/4 flex flex-col w-4/5 rounded-b-3xl dark:bg-zinc-800 dark:text-white'>
             <div className='pl-1'>
               <img  src=" https://i.pinimg.com/564x/58/bc/a3/58bca38c4d21f72acb56ff32c99831fb.jpg" alt="profilePic" className='rounded-full border-white border-4 w-28 h-28 absolute top-16'/>
               </div>
             <div className='flex justify-between pt-14'>
             {userV?<>
-                <div className='flex justify-evenly w-1/3 top-5 text-black'>
+                <div className='flex justify-evenly w-1/3 top-5 text-black  dark:text-white'>
                     
                     <div>
                     <h5>{userV.username}</h5>
@@ -172,7 +165,7 @@ console.log(followedUsers,'---------------------------followedUsers------------*
 
         </div>
     </div>
-    <div className=' flex justify-around h-4/6 w-screen bg-[#D9D9D9]'>
+    <div className=' flex justify-around h-4/6 w-screen bg-[#D9D9D9] dark:bg-zinc-600'>
       <div className='md:flex w-2/5 flex-col md:justify-center bg-[#FFFFFF] m-1 rounded-2xl hidden '>
       {followedUsers.length > 0 ?
       followedUsers.map((followedUser, index) => (
@@ -188,35 +181,28 @@ console.log(followedUsers,'---------------------------followedUsers------------*
       
       
       
-      </div>
-      <div className='w-4/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-      <div className='flex justify-evenly m-3 '>
-        <h3 className='active: text-orange-600 pb-3 mb-3' >
-        
-        </h3>
-        {post && post.length > 0 ? (
-      <div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
-      {post.map((item) => (
-      <div className='bg-emerald-50 rounded-xl mb-3' key={item._id}>
-        <div className="flex justify-between items-center">
-          <div className='flex flex-col'>
-            {/* <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" /> */}
-            {/* <h4 className='relative left-5'>{item._id}</h4><br /> */}
-            <p>{item.desc}</p>
-          </div>
-
-
-
-
-   
-
+    </div>
+    <div className='w-4/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto  dark:bg-zinc-600' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+    <div className='flex justify-evenly m-3 '>
+      <h3 className='active: text-orange-600 pb-3 mb-3' >
+      
+      </h3>
+      {post && post.length > 0 ? (
+    <div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
+    {post.map((item) => (
+    <div className='bg-emerald-50 rounded-xl mb-3  dark:bg-zinc-300' key={item._id}>
+      <div className="flex justify-between items-center">
+        <div className='flex flex-col'>
+          {/* <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" /> */}
+          {/* <h4 className='relative left-5'>{item._id}</h4><br /> */}
+          <p>{item.desc}</p>
+        </div>
   </div>
   <div className='flex justify-center relative '><img className='pl-7 pr-7 w-full h-52 object-cover rounded-3xl' src={item.image} alt=""/> </div>
   
   <div className='flex justify-around mb-5'>
         <div className='flex '>
             <LikeBtn postID={item._id} />
-      
         </div>
         <button onClick={() => commentClick(item._id)}>comment</button>
         <button>share</button>
@@ -271,23 +257,19 @@ console.log(followedUsers,'---------------------------followedUsers------------*
             <hr />
           </div>
         ) : null}
-  <hr className='mb-8'/>
-</div>
-))}
-</div>
-) : (
-<div>NO Post Yet...!</div>
-)}
-  
+        <hr className='mb-8'/>
+      </div>
+      ))}
+      </div>
+      ) : (
+      <div>NO Post Yet...!</div>
+      )}  
+      </div>
+      <div>
         
       </div>
-      <div></div>
       </div>
-    </div>
-
-
-
-      
+    </div>  
     </div>
   );
 };

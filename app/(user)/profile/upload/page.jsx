@@ -38,7 +38,7 @@ function Upload() {
       console.log(response, ': RESPONSEEEEEEEE');
       if (response.status === 200) {
         toast.success('File Uploaded!');
-        setIsUploaded(true); // Set the isUploaded state to true after successful upload
+        setIsUploaded(true); 
       } else {
         toast.error('Something went wrong!');
       }
@@ -76,6 +76,7 @@ function Upload() {
         <button type='submit' className='rounded-lg w-16 bg-lime-600 text-white m-3' disabled>Upload</button>
         }
       </form>
+      {/* preview */}
       {selectedFile && (
         <div className='flex flex-col items-center'>
           <h2>Preview:</h2>
@@ -84,7 +85,7 @@ function Upload() {
           ) : selectedFile.type.startsWith('video/') ? (
             <video controls style={{ maxWidth: '30%' }}>
               <source src={URL.createObjectURL(selectedFile)} type={selectedFile.type} />
-              Your browser does not support the video tag.
+                video not supported
             </video>
           ) : (
             <p>File type not supported for preview.</p>

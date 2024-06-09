@@ -10,10 +10,6 @@ import { useRouter } from 'next/navigation';
 
 
 function Login() {
-
-
-
-  
     const router = useRouter(); 
     useEffect(() => {
       const token = localStorage.getItem('token');
