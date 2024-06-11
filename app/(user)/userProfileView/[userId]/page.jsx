@@ -6,6 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import LikeBtn from '../../components/likeBTN';
 import AppContext from '@/app/context/myContext';
 import FollowButton from '../../components/followUnfollowBTN';
+import Link from 'next/link';
 
 
 const UserProfile = (params) => {
@@ -125,19 +126,25 @@ console.log(followedUsers,'---------------------------followedUsers------------*
   return (
     <div className='flex flex-col w-screen h-screen bg-[#D9D9D9] dark:bg-zinc-700 dark:text-white text-black'>
       <Toaster position="top-center" reverseOrder={false} />
-      <div className='flex flex-col h-2/6  items-center dark:bg-zinc-700'>
-        <div className='w-screen h-2/4 object-cover'>
-            <img className='sm:rounded-b-md relative h-full w-full lg:rounded-b-full' src="https://www.dndspeak.com/wp-content/uploads/2021/04/Temple-1-768x512.jpg" alt="" />
+      <div className='flex flex-col h-1/6 sm:h-2/6 md:h-2/6 items-center dark:bg-zinc-700'>
+      <div className='w-screen h-2/4 object-cover'>
+          <img className='sm:rounded-b-md  relative h-full w-full lg:rounded-b-full' src="https://www.dndspeak.com/wp-content/uploads/2021/04/Temple-1-768x512.jpg" alt="" />
+          <Link className='absolute top-3 left-3' href='/home' >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+            </svg>
+          </Link>
         </div>
-        <div className='bg-[#FFFFFF] h-2/4 flex flex-col w-4/5 rounded-b-3xl dark:bg-zinc-800 dark:text-white'>
+
+        <div  className='bg-[#FFFFFF] h-2/4  flex flex-col w-4/5 rounded-b-3xl dark:bg-zinc-800'>
             <div className='pl-1'>
-              <img  src=" https://i.pinimg.com/564x/58/bc/a3/58bca38c4d21f72acb56ff32c99831fb.jpg" alt="profilePic" className='rounded-full border-white border-4 w-28 h-28 absolute top-16'/>
+              <img  src=" https://i.pinimg.com/564x/58/bc/a3/58bca38c4d21f72acb56ff32c99831fb.jpg" alt="profilePic"  className='rounded-full border-white border-4 md:w-28 md:h-28 md:-top-16 h-16 w-16 relative -top-12' />
               </div>
-            <div className='flex justify-between pt-14'>
+            <div className='flex justify-between -mt-12 md:-mt-10 pl-5 pr-5  relative'>
             {userV?<>
                 <div className='flex justify-evenly w-1/3 top-5 text-black  dark:text-white'>
                     
-                    <div>
+                    <div className='text-sm'>
                     <h5>{userV.username}</h5>
                     <p>{userV.email}</p>
                     </div>
@@ -155,7 +162,7 @@ console.log(followedUsers,'---------------------------followedUsers------------*
                 </div>
                 
                 
-                <div className='cursor-pointer' onClick={getFollowersProfile}>
+                <div className='cursor-pointer text-sm' onClick={getFollowersProfile}>
                   <p>followers: {userV.followers ? userV.followers.length : 0}</p>
                   <p>following: {userV.following ? userV.following.length : 0}</p>
                 </div>
@@ -165,8 +172,20 @@ console.log(followedUsers,'---------------------------followedUsers------------*
 
         </div>
     </div>
-    <div className=' flex justify-around h-4/6 w-screen bg-[#D9D9D9] dark:bg-zinc-600'>
-      <div className='md:flex w-2/5 flex-col md:justify-center bg-[#FFFFFF] m-1 rounded-2xl hidden '>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div className=' flex justify-around h-5/6 w-screen bg-[#D9D9D9] dark:bg-zinc-600'>
+      <div className='md:flex w-2/5 flex-col md:justify-center bg-[#FFFFFF] m-1 rounded-2xl hidden dark:bg-zinc-800'>
       {followedUsers.length > 0 ?
       followedUsers.map((followedUser, index) => (
         <div>
@@ -184,13 +203,11 @@ console.log(followedUsers,'---------------------------followedUsers------------*
     </div>
     <div className='w-4/5 text-center bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto  dark:bg-zinc-600' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
     <div className='flex justify-evenly m-3 '>
-      <h3 className='active: text-orange-600 pb-3 mb-3' >
-      
-      </h3>
+     
       {post && post.length > 0 ? (
     <div className='flex w-full flex-col h-fit justify-items-center  rounded-lg'>
     {post.map((item) => (
-    <div className='bg-emerald-50 rounded-xl mb-3  dark:bg-zinc-300' key={item._id}>
+    <div className='bg-emerald-50 rounded-xl mb-3  dark:bg-zinc-800' key={item._id}>
       <div className="flex justify-between items-center">
         <div className='flex flex-col'>
           {/* <img className='rounded-full w-16 h-16' src="https://i.pinimg.com/236x/ce/4b/57/ce4b573d0f130c205217d607c3b8e81f.jpg" alt="" /> */}

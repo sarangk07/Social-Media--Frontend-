@@ -45,20 +45,24 @@ function Profile() {
   };
 
   return (
-    <div className='flex flex-col w-screen h-screen bg-emerald-100 dark:bg-black'>
-    <Toaster position="top-center" reverseOrder={false} />
+    <div className='flex flex-col w-screen h-screen md:h-[150vh] bg-emerald-100 dark:bg-zinc-800 overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+    <Toaster position="top-center" reverseOrder={false} />  
       
       
-      <div className='flex flex-col h-1/6 md:h-2/6 lg:h-2/6 items-center'>
+
+    {/* profile info div */}
+
+      <div className='flex flex-col h-1/4 md:3/6  items-center dark:bg-zinc-700' >
         <div className='w-screen h-2/4 object-cover'>
-          <img className='sm:rounded-b-md  relative h-full w-full lg:rounded-b-full' src="https://www.dndspeak.com/wp-content/uploads/2021/04/Temple-1-768x512.jpg" alt="" />
+          <img className='sm:rounded-b-md  relative h-24 w-full lg:rounded-b-full' src="https://www.dndspeak.com/wp-content/uploads/2021/04/Temple-1-768x512.jpg" alt="" />
           <Link className='absolute top-3 left-3' href='/home' >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
             </svg>
           </Link>
         </div>
-        <div className='bg-[#FFFFFF] h-2/4 flex flex-col w-4/5 rounded-b-3xl dark:bg-zinc-800'>
+
+        <div className='md:relative md:-top-6 bg-[#FFFFFF] h-2/4 flex flex-col w-4/5 rounded-b-3xl dark:bg-zinc-800'>
           <div className='pl-1'>
             <img  src=" https://i.pinimg.com/564x/58/bc/a3/58bca38c4d21f72acb56ff32c99831fb.jpg" alt="profilePic" className='rounded-full border-white border-4 md:w-28 md:h-28 md:-top-16 h-16 w-16 relative -top-12' />
           </div>
@@ -66,7 +70,7 @@ function Profile() {
             {currentUser ? (
               <>
                 <div className='flex flex-col  justify-evenly w-1/3 top-5 pl-1 -mt-3 text-black dark:text-white'>
-                  <div className='text-sm md:pb-7 md:pl-5'>
+                  <div className='text-sm md:pb-11 md:pl-5'>
                     <h5>{currentUser.username}</h5>
                     <p>{currentUser.email}</p>
                   </div>
@@ -113,9 +117,10 @@ function Profile() {
 
 
 
+{/* post div */}
 
-      <div className='flex justify-around  w-screen h-4/6 md:h-4/6 lg:h-4/6  bg-emerald-100 dark:bg-black overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <div className='hidden md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden  dark:bg-zinc-900'>messages</div>
+      <div className='flex justify-around w-screen h-3/4  md:h-4/4 lg:h-5/6  bg-emerald-100 dark:bg-zinc-900 overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className='hidden  md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden  dark:bg-zinc-950'>messages</div>
         <div className=' w-4/5 text-center  bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto dark:bg-zinc-900' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className='flex flex-col '>
             <div className='flex justify-evenly'>

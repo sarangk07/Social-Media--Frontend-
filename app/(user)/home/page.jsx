@@ -659,7 +659,7 @@ const handleShowFollowing = () => {
 
 
   {/* ------User Info-------- */}
-    <div  className='md:flex md:flex-co h-fit  hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl dark:bg-black dark:text-white bg-white text-center sm:hidden'>
+    <div  className='md:flex md:flex-co h-fit md:justify-center hidden w-1/4 mt-3 mr-3 p-3 rounded-3xl dark:bg-black dark:text-white bg-white text-center sm:hidden'>
       <h3>{currentUser ?
       <> 
       <li className='list-none pr-5'><Link href='profile'>

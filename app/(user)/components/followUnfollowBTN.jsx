@@ -49,7 +49,7 @@ const FollowButton = ({ userId, currentUser }) => {
   return (
     <>
       <button
-        className={`rounded-md p-2 hover:text-black ${
+        className={`rounded-md p-1 text-sm hover:text-black ${
           isFollowing ? 'bg-orange-300' : 'bg-emerald-300'
         }`}
         onClick={handleFollowUnfollow}
@@ -60,8 +60,8 @@ const FollowButton = ({ userId, currentUser }) => {
             ? 'Unfollowing...'
             : 'Following...'
           : isFollowing
-          ? 'Unfollow'
-          : 'Follow'}
+            ? 'Unfollow'
+            : 'Follow'}
       </button>
     </>
   );

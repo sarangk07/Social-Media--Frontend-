@@ -56,7 +56,6 @@ export const AppProvider = ({ children }) => {
         console.error('User ID not found in localStorage');
         return;
       }
-
       const fData = { userId };
       const response = await axios.put(`https://social-media-5ukj.onrender.com/posts/${postId}/like`, fData);
       toast.success(response.data);

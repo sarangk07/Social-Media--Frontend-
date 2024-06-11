@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 function CmtDeleteBTN({ commentId, postId }) { 
   const handleDeleteCMT = async () => {
@@ -15,8 +17,10 @@ function CmtDeleteBTN({ commentId, postId }) {
       );
 
       console.log(response.data, ': delete comment response!');
+      toast.success('comment deleted!')
     } catch (error) {
       console.error('There was an error deleting the comment:', error);
+      toast.error('somthing went wrong!')
     }
   }
 
