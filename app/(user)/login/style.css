@@ -1,16 +1,9 @@
 
 .mainDivLogin{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    font-family: cursive;
     /* background-color: #0f0f0f; */
     background-image: url('https://wallpapertag.com/wallpaper/middle/b/b/a/113034-gorgerous-polygon-wallpaper-2560x1600.jpg');
-    align-items: center;
-    width: 100%;
-    height: 100vh;
 }
-.secondDivLogin{
+/* .secondDivLogin{
     background-color: #070707;
     padding: 5%;
     width: 100%;
@@ -21,30 +14,30 @@
     justify-content: center;
     align-items: center;
     border-radius: 30px;
-}
-h2{
+} */
+/* h2{
     color: white;
-}
+} */
 
-.loginImgDiv{
+/* .loginImgDiv{
     background-color: #070707;
     width: 40%;
     margin: 0px; 
-}
+} */
 .loginimg{
-    width: 100%;
+    /* width: 100%;
     height: 80vh;
-    margin: 0;
+    margin: 0; */
     border-radius: 0px 50px 50px 0px;
 }
-.FormDivLogin{
+/* .FormDivLogin{
     width: 60%;
     height: 80vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
+} */
 input{
     border-radius: 5px;
     padding: 15px;
@@ -162,8 +155,6 @@ label{
         transform: rotate(-30deg);
         width: 411px;
     }
-
-    
 }
 @media screen and (max-width: 800px) {
 

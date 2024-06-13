@@ -7,6 +7,7 @@ import React, { useState,useEffect, useContext } from 'react';
 import LikeBtn from '../components/likeBTN';
 import CmtDeleteBTN from '../components/deleteCMTbutton';
 import EditCMTButton from '../components/editCMTbutton';
+import FollowButton from '../components/followUnfollowBTN';
 import PostDeleteBTN from '../components/postDeleteBTN';
 import AppContext from '@/app/context/myContext';
 import { useRouter } from 'next/navigation'; 
@@ -27,6 +28,13 @@ function Profile() {
   const { currentUser, posts, comments, fetchComments, createComment,data } = useContext(AppContext);
   console.log(comments, ': comments');
 
+  const [followersU, setFollowersU] = useState([]);
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [followingU, setFollowingU] = useState([]);
+  const [showFollowing, setShowFollowing] = useState(false);
+  const [fUsers,setFusers] = useState('default');
+
+
 
   const commentClick = (postId) => {
     fetchComments(postId);
@@ -43,6 +51,34 @@ function Profile() {
     createComment(postId, createCMT);
     setCreateCMT('');
   };
+
+
+
+
+  
+
+//followers/following user display
+const handleShowFollowers = () => {
+  setFusers('followers');
+  if (currentUser && currentUser.followers && data.allUsers) {
+    const followersId = currentUser.followers;
+    const foundUsers = data.allUsers.filter(user => followersId.includes(user._id));
+    setFollowersU(foundUsers);
+    console.log('followers', foundUsers);
+    setShowFollowers(true);
+  }
+};
+const handleShowFollowing = () => {
+  setFusers('following');
+  if (currentUser && currentUser.following && data.allUsers) {
+    const followingId = currentUser.following;
+    const foundUsers = data.allUsers.filter(user => followingId.includes(user._id));
+    setFollowingU(foundUsers);
+    console.log('following', foundUsers);
+    setShowFollowing(true);
+  }
+};
+
 
   return (
     <div className='flex flex-col w-screen h-screen md:h-[150vh] bg-emerald-100 dark:bg-zinc-800 overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -79,11 +115,11 @@ function Profile() {
                   <div>
                   <div className='flex pr-3 relative top-5 pt-2'>
                     <div className='text-sm'>
-                      <p className='pr-3'>followers</p>
+                      <p className='pr-3 cursor-pointer'onClick={handleShowFollowers}>followers</p>
                       <p className='flex justify-center'>{currentUser.followers ? currentUser.followers.length : 0}</p>
                     </div>
                     <div className='text-sm'>
-                      <p>following</p>
+                      <p className='cursor-pointer' onClick={handleShowFollowing}>following</p>
                       <p className='flex justify-center'>{currentUser.following ? currentUser.following.length : 0}</p>
                     </div>
                   </div>
@@ -120,7 +156,95 @@ function Profile() {
 {/* post div */}
 
       <div className='flex justify-around w-screen h-3/4  md:h-4/4 lg:h-5/6  bg-emerald-100 dark:bg-zinc-900 overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <div className='hidden  md:flex w-1/5 md:justify-center bg-[#FFFFFF] m-3 rounded-2xl sm:hidden  dark:bg-zinc-950'>messages</div>
+        
+        <div className='hidden  md:flex-col  md:flex w-1/5  bg-[#FFFFFF] m-3 rounded-2xl sm:hidden  dark:bg-zinc-950'>
+        {fUsers === 'default' ? (
+          <>
+            <p>Suggestions</p>
+            {/* {data?.lusers ? (
+              <>
+                {data.lusers.filter((x) => x._id !== id).map((x, index) => (
+                  <div
+                    className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900"
+                    key={x._id}
+                    ref={(el) => (recommendedUsersRef.current[index] = el)}
+                    style={{ opacity: 0, transform: 'translateY(20px)' }}
+                  >
+                    <div className="w-1/3">
+                      <Link href={`/userProfileView/${x._id}`}>
+                        <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
+                          <span className="text-gray-700 text-xl font-bold">
+                            {x.username.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      </Link>
+                    </div>
+                    <p className="w-2/5 overflow-hidden md:flex">{x.username}</p>
+                    <FollowButton userId={x._id} currentUser={currentUser} />
+                  </div>
+                ))}
+              </>
+            ) : (
+              <div className="flex animate-pulse">Loading.....</div>
+            )} */}
+        </>
+        ) : fUsers === 'followers' ? (
+          <>
+            <p>Followers</p>
+            {showFollowers && (
+              <div>
+                {followersU.map(user => ( 
+                  <div key={user._id} className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900">
+                    
+                  <div className="w-1/3">
+                    <Link href={`/userProfileView/${user._id}`}>
+                      <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
+                        <span className="text-gray-700 text-xl font-bold">
+                          {user.username.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    </Link>
+                  </div>
+                  <p className="w-2/5 overflow-hidden md:flex">{user.username}</p>
+                  <FollowButton userId={user._id} currentUser={currentUser} />
+              
+                  </div>
+                ))}
+              </div>
+            )}
+          
+          </>
+        ) : (
+          <>
+            <h1>Following</h1>
+            {showFollowing && (
+              <div>
+                {followingU.map(user => ( 
+                  <div key={user._id} className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900">
+                    
+                  <div className="w-1/3">
+                    <Link href={`/userProfileView/${user._id}`}>
+                      <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
+                        <span className="text-gray-700 text-xl font-bold">
+                          {user.username.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    </Link>
+                  </div>
+                  <p className="w-2/5 overflow-hidden md:flex">{user.username}</p>
+                  <FollowButton userId={user._id} currentUser={currentUser} />
+              
+                  </div>
+                ))}
+              </div>
+            )}
+            
+          </>
+        )}
+
+        </div>
+        
+        
         <div className=' w-4/5 text-center  bg-[#FFFFFF] m-3 rounded-2xl sm:w-4/5 overflow-auto dark:bg-zinc-900' style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className='flex flex-col '>
             <div className='flex justify-evenly'>

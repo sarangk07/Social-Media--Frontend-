@@ -98,8 +98,10 @@ useEffect(() => {
         const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${id}/timeline`);
         console.log(response, 'responseeeeeeeeeeeeeeeeeeeeeeeeee');
         console.log(response.data, 'post get responseeeeeeeeeeeeeeeeeeeeeeeeee');
+        const fPost = response.data.filter((x)=>x.userId == id)
         if (response.data.length !== 0) {
-          setPosts(response.data);
+          setPosts(fPost);
+          console.log('filtered post=============================',fPost);
         }
         else{
           console.log('no post found!');
@@ -118,7 +120,7 @@ useEffect(() => {
 //   console.log('UserV:', userV);
 // }, [currentUser, userV]);
 
-
+console.log('postsss--------------------------------------',post);
 console.log(followedUsers,'---------------------------followedUsers------------********************');
 
 

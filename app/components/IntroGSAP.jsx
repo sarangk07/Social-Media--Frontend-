@@ -1,15 +1,21 @@
 'use client';
 
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin'
 import { useGSAP } from '@gsap/react'
 import Link from 'next/link';
+
+gsap.registerPlugin(MotionPathPlugin);
 
 function IntroGSAP() {
     const welcomeRef = useRef(null)
     const toRef = useRef(null)
     const vmRef = useRef(null)
     const buttonRef = useRef(null)
+    const earthRef = useRef(null)
+    const marsRef = useRef(null)
+    const neptuneRef = useRef(null)
 
     useGSAP(() => {
         const tl = gsap.timeline()
@@ -40,7 +46,44 @@ function IntroGSAP() {
             repeat: -1,
             yoyo: true,
             ease: 'power1.inOut',
-        }, '+=0.5')
+        }, '+=0.5');
+
+        const radius = 150;
+        const centerX = 0;
+        const centerY = 0;
+
+        gsap.to(earthRef.current, {
+            duration: 8,
+            repeat: -1,
+            ease: 'linear',
+            motionPath: {
+                path: `M ${centerX} ${centerY - radius} A ${radius} ${radius} 0 1 1 ${centerX - 0.1} ${centerY - radius} Z`,
+                align: 'self',
+                autoRotate: true
+            }
+        });
+
+        gsap.to(marsRef.current, {
+            duration: 12,
+            repeat: -1,
+            ease: 'linear',
+            motionPath: {
+                path: `M ${centerX} ${centerY - radius} A ${radius} ${radius} 0 1 1 ${centerX - 0.1} ${centerY - radius} Z`,
+                align: 'self',
+                autoRotate: true
+            }
+        });
+
+        gsap.to(neptuneRef.current, {
+            duration: 15,
+            repeat: -1,
+            ease: 'linear',
+            motionPath: {
+                path: `M ${centerX} ${centerY - radius} A ${radius} ${radius} 0 1 1 ${centerX - 0.1} ${centerY - radius} Z`,
+                align: 'self',
+                autoRotate: true
+            }
+        });
     }, [])
 
     return (
@@ -53,10 +96,13 @@ function IntroGSAP() {
                 </div>
                 <br />
                 <Link className='rounded-xl text-center bg-emerald-500 p-2 text-gray-800 no-underline' href="./login" ref={buttonRef}>
-                    Get Start!
+                    Get Start
                 </Link>
                 <br />
             </div>
+            <img ref={earthRef} src="/earth.png" alt="earth" className='absolute top-48 w-10 h-10 md:hidden' />
+            <img ref={marsRef} src="/mars.png" alt="mars" className='absolute top-44 w-10 h-10 md:hidden' />
+            <img ref={neptuneRef} src="/neptune.png" alt="neptune" className='absolute top-40 w-10 h-10 md:hidden' />
         </div>
     )
 }
