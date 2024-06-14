@@ -85,7 +85,7 @@ const handleSubmit = async (values, { resetForm }) => {
         </div>
         
 
-      <div className=' bg-black p-0 w-full h-screen overflow-hidden flex flex-row justify-center items-center rounded-2xl'>
+      <div className=' bg-black p-0 w-full h-screen overflow-hidden flex flex-row justify-center items-center'>
         <div className=' bg-black md:w-2/5 m-0 rounded-custom col-md-6 hidden'>
           <img  className='loginimg' src="https://i.pinimg.com/originals/d3/9a/0d/d39a0daf8440e7c1e985f448497c550b.jpg" alt="" />
         </div>
@@ -113,13 +113,13 @@ const handleSubmit = async (values, { resetForm }) => {
 
       <div>
             <label htmlFor="name">Name</label><br />
-            <Field className='w-36 h-fit rounded-lg text-white mr-2' type="text" id="name" name="name"  required/><br />
+            <Field className='w-36 h-fit rounded-lg dark:text-white text-gray-800 mr-2' type="text" id="name" name="name"  required/><br />
             <ErrorMessage name="name" component="div" className="error text-xs" /><br />
       </div>
                 
       <div>
             <label htmlFor="email">Email</label><br />
-            <Field className='text-white  rounded-lg w-36 h-fit' type="email" id="email" name="email"   required/><br />
+            <Field className='text-gray-800 dark:text-white  rounded-lg w-36 h-fit' type="email" id="email" name="email"   required/><br />
             <ErrorMessage name="email" component="div" className="error text-xs" /><br />
       </div>
       </div>  
@@ -132,7 +132,7 @@ const handleSubmit = async (values, { resetForm }) => {
       <ErrorMessage name="confirmPassword" component="div" className="error text-xs" /><br />
 
       <div className='btnDiv'>
-        <button type='submit' disabled={!formik.isValid || formik.isSubmitting} className='px-4 py-2 font-bold text-white bg-emerald-500 rounded hover:bg-emerald-600-600'>Create</button><Link href='login' className='px-1 py-1 btn btn-secondary'>Have account?<span className='text-lg'> login</span></Link>
+        <button type='submit' disabled={!formik.isValid || formik.isSubmitting} className='px-4 py-2 font-bold text-white bg-emerald-500 rounded hover:bg-emerald-600-600'>Create</button><Link href='login' className='px-1 py-1 text-emerald-500'>Have account?<span className='text-lg'> login</span></Link>
       </div>
     </Form>
         

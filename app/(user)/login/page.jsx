@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import React, { useState, useContext ,useEffect} from 'react';
-import './style.css';
 import AppContext from '@/app/context/myContext'; 
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -37,42 +36,65 @@ function Login() {
   };
 
   return (
+    <div className='flex flex-row justify-center items-center w-full h-fit '>
     <div>
-      <div className='flex justify-center font-mono items-center w-full h-screen mainDivLogin'>
-        <Toaster position="top-center" reverseOrder={false} />
-        <div className='secondDivLogin bg-zinc-900 p-2 w-full h-[80vh] overflow-hidden flex flex-row justify-center items-center rounded-md'>
-          <div className='loginImgDiv bg-zinc-900 w-[40%] m-0'>
-            <img className='loginimg w-full h-[80vh] m-0 ' src="https://i.pinimg.com/originals/04/e1/52/04e1525a0ba8ab8b642ef9a455c175cd.jpg" alt="" />
-          </div>
-          <div className='FormDivLogin w-[60%] h-[80vh] flex flex-row justify-center items-center'>
-            <form onSubmit={handleSubmit}>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h4 className='font-mono text-5xl text-emerald-500'>VM</h4>
-              </div>
-              <div className="md:hidden block bg-[#2f2f30] z-[-1] h-[611px] left-[85px] absolute top-[75px] -rotate-30 w-[711px]" />
-
-              <div className='block bg-[#2f2f30] top-[-565px] overflow-visible z-[-1] h-[611px] w-[411px] left-[-415px] transform -rotate-30 absolute md:hidden' />
-
-              <h2>Login</h2>
-              <label htmlFor="">email</label><br />
-              <input className='text-black' type="email" onChange={(e) => setEmail(e.target.value)} /><br /><br />
-              <label htmlFor="">password</label><br />
-              <input className='text-black' type={showPass ? 'text' : 'password'} onChange={(e) => setPassword(e.target.value)} /><br />
-              <br />
-              <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={showPassword}>
-                {showPass ? 'Hide Password' : 'Show Password'}
-              </a><br /><br />
-              <div className='btnDiv'>
-                <button type='submit' className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded'>
-                  {loading ? 'Loading...' : 'Login'}
-                </button>
-                <Link href='register' className='text-cyan-400'>New here? create</Link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+    /> 
     </div>
+    
+
+  <div className=' bg-black md:bg-gradient-to-r from-[#211C30] to-black p-0 w-full h-screen overflow-hidden flex flex-row justify-center items-center'>
+    <div className=' bg-black md:w-2/5 m-0 rounded-custom col-md-6 hidden'>
+      <img  className='loginimg' src="https://i.pinimg.com/originals/d3/9a/0d/d39a0daf8440e7c1e985f448497c550b.jpg" alt="" />
+    </div>
+    
+  <div className='  w-4/6 h-screen flex flex-row justify-center items-center md:border-solid  ${backgroundImageClass}  md:items-center md:rounded-3xl' >
+      <div className="md:hidden block overflow-hidden bg-zinc-800 z-[0] h-[511px] left-[0px] relative w-screen" />
+      <div className="md:hidden block overflow-hidden bg-emerald-700 z-[0] h-[511px] right-[0px] relative top-[15px]  w-screen" />
+          
+      <div className="hidden md:block md:overflow-hidden md:bg-zinc-800 md:z-[0] md:h-full md:left-[0px] md:ab md:w-screen">
+        <img className='h-screen w-full' src="https://i.pinimg.com/originals/5b/63/bb/5b63bb09479d5c514283cda91e06e5f2.jpg" alt="" />
+      </div>
+      <div className="hidden md:block md:overflow-hidden md:bg-emerald-700 md:z-[0] md:h-full md:right-[0px] md:relative md:w-screen md:ml-28" >
+        <img className='h-screen w-full' src="https://i.pinimg.com/originals/3d/b2/31/3db23167e07635ea6f47caa002228603.jpg" alt="" />
+      </div>
+
+<form onSubmit={handleSubmit} action="" className= 'font-playfair font-bold absolute md:backdrop-blur-md  md:p-10'>
+  <h4 className='flex flex-col items-center font-merriweather text-balance '>Get Start With <span className='text-emerald-300 text-4xl'> VM</span></h4><br />
+  <h2 className='text-gray-200'>LogIn</h2><hr /><br />
+  <div className='flex '>
+    
+  <div className='flex flex-col relative w-full'>
+        <label htmlFor="email">Email</label><br />
+        <input className='text-gray-800 dark:text-white rounded-md -mt-5 relative' type="email" onChange={(e) => setEmail(e.target.value)} /><br /><br />
+       
+        <label htmlFor="password">Password</label><br />
+        <input className='text-gray-800 dark:text-white rounded-md -mt-5' type={showPass ? 'text' : 'password'} onChange={(e) => setPassword(e.target.value)} /><br />
+        <a className="bg-slate-600 hover:bg-slate-700 cursor-pointer text-white font-bold p-1 rounded w-[130px] h-[30px]" onClick={showPassword}>
+          {showPass ? 'Hide Password' : 'Show Password'}
+        </a><br />
+  </div>
+  
+  </div>  
+  <div className='btnDiv'>
+  <button type='submit' className='bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded'>
+    {loading ? 'Loading...' : 'Login'}
+  </button>
+    <Link href='register' className='text-cyan-400 pl-3'>New here? create</Link>  
+  </div>
+</form>
+    
+
+  </div>
+  </div>
+</div>
+
+
+
+
+
   );
 }
 
