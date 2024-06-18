@@ -6,11 +6,11 @@ import Navbar from '@/app/components/Navbar';
 import Link from 'next/link';
 import toast, { Toaster } from 'react-hot-toast';
 import FollowButton from '../components/followUnfollowBTN';
-// import EditCMTButton from '../components/editCMTbutton';
-// import CmtDeleteBTN from '../components/deleteCMTbutton';
+
 import LikeBtn from '../components/likeBTN';
 import { gsap } from 'gsap';
 import { useRouter } from 'next/navigation'; 
+
 
 
 import FollowersPost from '../components/FollowersPost';
@@ -24,11 +24,10 @@ export default function Home() {
   const router = useRouter();
 
   
-  const { data, currentUser, allposts, loading,posts,comments, fetchComments, createComment ,followedPosts} = useContext(AppContext);
+  const { data, currentUser, loading} = useContext(AppContext);
   const fieldArray = ['discover', 'followers', 'mypost']
 
-  // const [openCMT, setOpenCMT] = useState(false);
-  // const [createCMT, setCreateCMT] = useState('');
+
   const [field,setField] = useState(fieldArray[0]);
   const [fUsers,setFusers] = useState('default');
 
@@ -97,22 +96,6 @@ export default function Home() {
   };
 
 
-
-  
-// //comment functionalities-----------------
-//   const commentClick = (postId) => {
-//     fetchComments(postId);
-//     setOpenCMT((prevState) => (prevState === postId ? null : postId));
-//   };
-
-//   const handleCreateCMT = (postId) => {
-//     createComment(postId, createCMT);
-//     setCreateCMT('');
-//   };
-
-
-
-
   //GSAP Animation----------------
   useEffect(() => {
     if (data.lusers) {
@@ -125,7 +108,6 @@ export default function Home() {
       });
     }
   },[data.lusers]);
-
 
 
 
@@ -165,7 +147,6 @@ const handleShowFollowing = () => {
     <div className='flex w-screen h-screen sm:justify-center'>
 
     {/* -----------suggestion users-------- */}
-
 
     <div className='md:flex md:flex-col hidden h-fit w-1/4 mt-3 mr-3 p-3 rounded-3xl bg-white text-center sm:hidden  dark:bg-black dark:text-white'>
     {fUsers === 'default' ? (
@@ -322,7 +303,7 @@ const handleShowFollowing = () => {
 {/*----------------------- All users post display -----------------------*/}
             <Allpost/>
           </>  
-          :
+            :
           <>
 
 {/*----------------------- followed users post display -----------------------*/}

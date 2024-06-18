@@ -11,6 +11,8 @@ import CmtDeleteBTN from '../components/deleteCMTbutton';
 import LikeBtn from '../components/likeBTN';
 import { gsap } from 'gsap';
 import { useRouter } from 'next/navigation'; 
+import LoadingGIF from '@/app/components/loadingGIF';
+
 
 
 
@@ -101,7 +103,7 @@ function Allpost() {
                           )}
                       </div>
                       <br />
-                      <p>{item.desc}</p>
+                      <p className='text-sm'>{item.desc}</p>
                       
                     </div>
                     <div className='flex justify-center rounded-md relative'>
@@ -176,13 +178,11 @@ function Allpost() {
                 ))}
               </div>
             ) : (
-              <div className='flex justify-center flex-col items-center transition-shadow'>
-              <div className="flex justify-center items-center w-12 h-12 bg-emerald-300 animate-spin rounded-full">
-                <div className="absolute w-10 h-1 bg-white rounded-full"></div>
-                <div className="absolute w-10 h-1 bg-white rounded-full transform rotate-90"></div>
+              
+              <div className='flex justify-center w-full '>
+               <LoadingGIF/>
               </div>
-              <div className='flex animate-pulse'>Loading.....</div>
-              </div>
+              
             )} 
               </>
 

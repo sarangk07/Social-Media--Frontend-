@@ -241,7 +241,6 @@ const handleShowFollowing = () => {
             
           </>
         )}
-
         </div>
         
         
@@ -257,16 +256,15 @@ const handleShowFollowing = () => {
                       <div className='bg-emerald-50 rounded-xl mb-5 dark:text-white dark:bg-zinc-950' key={item._id}>
                         <div className="flex justify-between items-center">
                           <div className='flex flex-col'>
-                            <p>{item.desc}</p>                        
+                            <p className=' text-black dark:text-white'>{item.desc}</p>                        
                           </div>
                         </div>
                         <div className='flex justify-center relative'>
                           <img className='pl-7 pr-7 w-full object-cover rounded-3xl' src={item.image} alt="" />
                         </div>
-                        <div className='flex justify-around mb-5'>
+                        <div className='flex justify-around mb-5 text-black dark:text-white'>
                           <div className='flex '>
                             <LikeBtn postID={item._id} />
-                            
                           </div>
                           
                           <button onClick={() => commentClick(item._id)}>

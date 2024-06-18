@@ -11,6 +11,7 @@ import CmtDeleteBTN from '../components/deleteCMTbutton';
 import LikeBtn from '../components/likeBTN';
 import { gsap } from 'gsap';
 import { useRouter } from 'next/navigation'; 
+import LoadingGIF from '@/app/components/loadingGIF';
 
 
 
@@ -184,12 +185,14 @@ function FollowersPost() {
                   </div>
                 ) : (
                   <div className='flex justify-center flex-col items-center transition-shadow'>
-                  <div className="flex justify-center items-center w-12 h-12 bg-emerald-300 animate-spin rounded-full">
+                  {/* <div className="flex justify-center items-center w-12 h-12 bg-emerald-300 animate-spin rounded-full">
                     <div className="absolute w-10 h-1 bg-white rounded-full"></div>
                     <div className="absolute w-10 h-1 bg-white rounded-full transform rotate-90"></div>
-                  </div>
+                  </div> */}
 
-                  <div className='flex animate-pulse'>Loading...../ No post found</div>
+                  <div className='flex'>
+                    <LoadingGIF/>
+                  </div>
                   </div>
                 )}
               </>

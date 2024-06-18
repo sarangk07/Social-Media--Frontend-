@@ -16,7 +16,7 @@ export default function Home() {
       <IntroGSAP/>
       <br />
       <div 
-        className="relative h-full hidden md:w-2/4 md:flex bg-no-repeat" 
+        className="relative h-full hidden w-0 md:w-2/4 md:flex bg-no-repeat" 
         style={{ 
           backgroundImage: "url('https://i.pinimg.com/564x/c6/24/66/c6246602e5babd535634488f03d07a71.jpg')", 
           backgroundPosition: '50%' 

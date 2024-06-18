@@ -5,8 +5,9 @@ import { gsap } from 'gsap'
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin'
 import { useGSAP } from '@gsap/react'
 import Link from 'next/link';
+import { Draggable } from 'gsap/all'
 
-gsap.registerPlugin(MotionPathPlugin);
+gsap.registerPlugin(MotionPathPlugin,Draggable);
 
 function IntroGSAP() {
     const welcomeRef = useRef(null)
@@ -84,6 +85,10 @@ function IntroGSAP() {
                 autoRotate: true
             }
         });
+        Draggable.create('#earth',{
+            type:'x,y'
+        })
+
     }, [])
 
     return (
@@ -100,7 +105,7 @@ function IntroGSAP() {
                 </Link>
                 <br />
             </div>
-            <img ref={earthRef} src="/earth.png" alt="earth" className='absolute top-48 w-10 h-10 md:hidden' />
+            <img ref={earthRef} src="/earth.png" alt="earth" id='earth' className='absolute top-48 w-10 h-10 md:hidden' />
             <img ref={marsRef} src="/mars.png" alt="mars" className='absolute top-44 w-10 h-10 md:hidden' />
             <img ref={neptuneRef} src="/neptune.png" alt="neptune" className='absolute top-40 w-10 h-10 md:hidden' />
         </div>

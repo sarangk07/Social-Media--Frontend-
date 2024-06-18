@@ -4,11 +4,28 @@ import Link from 'next/link';
 import React, { useState, useContext ,useEffect} from 'react';
 import AppContext from '@/app/context/myContext'; 
 import toast, { Toaster } from 'react-hot-toast';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import {Draggable} from 'gsap/all';
 
 import { useRouter } from 'next/navigation'; 
 
+gsap.registerPlugin(Draggable)
+
 
 function Login() {
+
+  useGSAP(()=>{
+    Draggable.create('#logintext',{
+      type:'x',
+      bounds:"#formT"
+    })
+
+    
+   
+  })
+
+
     const router = useRouter(); 
     useEffect(() => {
       const token = localStorage.getItem('token');
@@ -61,9 +78,9 @@ function Login() {
         <img className='h-screen w-full' src="https://i.pinimg.com/originals/3d/b2/31/3db23167e07635ea6f47caa002228603.jpg" alt="" />
       </div>
 
-<form onSubmit={handleSubmit} action="" className= 'font-playfair font-bold absolute md:backdrop-blur-md  md:p-10'>
+<form onSubmit={handleSubmit} action="" id='formT' className= 'font-playfair font-bold absolute md:backdrop-blur-md  md:p-10'>
   <h4 className='flex flex-col items-center font-merriweather text-balance '>Get Start With <span className='text-emerald-300 text-4xl'> VM</span></h4><br />
-  <h2 className='text-gray-200'>LogIn</h2><hr /><br />
+  <h2 id='logintext' className='text-gray-200'>LogIn</h2><hr /><br />
   <div className='flex '>
     
   <div className='flex flex-col relative w-full'>
