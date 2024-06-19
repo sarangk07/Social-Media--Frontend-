@@ -249,6 +249,72 @@ const handleShowFollowing = () => {
             <div className='flex justify-evenly'>
               <br />
             </div>
+
+
+
+            <div className='bg-zinc-800 md:hidden text-sm mb-5 flex flex-col rounded-md p-2'>
+            {fUsers === 'default' ? (
+                <>
+                    
+                </>
+                ) : fUsers === 'followers' ? (
+                  <>
+                    <p>Followers</p>
+                    {showFollowers && (
+                      <div>
+                        {followersU.map(user => ( 
+                          <div key={user._id} className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900">
+                            
+                          <div className="w-1/3">
+                            <Link href={`/userProfileView/${user._id}`}>
+                              <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
+                                <span className="text-gray-700 text-xl font-bold">
+                                  {user.username.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                            </Link>
+                          </div>
+                          <p className="w-2/5 overflow-hidden md:flex">{user.username}</p>
+                          <FollowButton userId={user._id} currentUser={currentUser} />
+                      
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  
+                  </>
+                ) : (
+                  <>
+                    <h1>Following</h1>
+                    {showFollowing && (
+                      <div>
+                        {followingU.map(user => ( 
+                          <div key={user._id} className="flex w-full m-1 justify-between items-center md:justify-around bg-emerald-50 rounded-lg p-4 dark:bg-zinc-900">
+                            
+                          <div className="w-1/3">
+                            <Link href={`/userProfileView/${user._id}`}>
+                              <div className="w-12 h-12 lg:flex md:hidden rounded-full bg-emerald-500 flex items-center justify-center">
+                                <span className="text-gray-700 text-xl font-bold">
+                                  {user.username.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                            </Link>
+                          </div>
+                          <p className="w-2/5 overflow-hidden md:flex">{user.username}</p>
+                          <FollowButton userId={user._id} currentUser={currentUser} />
+                      
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                  </>
+                )}
+            </div>
+            
+            
+            
+            
             <div className='ml-2 mr-2 pb-4'>
               {posts && posts.length > 0 ? (
                 <div className='flex w-full flex-col h-fit justify-items-center rounded-lg'>

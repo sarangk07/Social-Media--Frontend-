@@ -20,6 +20,11 @@ const montserrat = Montserrat({ subsets: ['latin', 'latin-ext'] });
 export const metadata = {
   title: "Virtual Mingle",
   description: "Mingle Virtualy..",
+  icons:{
+    icon:['/favicon.ico?v=4'],
+    apple:['/android-chrome-512x512?v=4'],
+    shortcut:['/android-chrome-512x512.png']
+  }
 };
 
 export default function RootLayout({ children }) {

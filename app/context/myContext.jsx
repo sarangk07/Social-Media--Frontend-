@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import React, { createContext, useState, useEffect } from 'react';
@@ -20,7 +19,14 @@ export const AppProvider = ({ children }) => {
   const [allposts, setAllPosts] = useState([]);
   const [followedPosts, setFollowedPosts] = useState([]);
   const [comments, setComments] = useState([]);
+  const [token,setToken] = useState(null);
 
+
+
+  useEffect(()=>{
+    const tok = localStorage.getItem('token')
+    setToken(tok)
+  },[])
 
 
 
@@ -31,6 +37,7 @@ export const AppProvider = ({ children }) => {
       const response = await axios.post('https://social-media-5ukj.onrender.com/auth/login', { email, password });
       if (response.status === 200) {
         setUser({ email });
+        console.log('toookeeeeeeeeeeeeeennnnnnnn',response.data.token);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('email', email);
         router.push('home');
@@ -259,7 +266,7 @@ export const AppProvider = ({ children }) => {
 
 
   return (
-    <AppContext.Provider value={{ user, likeUnlikePost, login, loading, data, currentUser, posts, allposts, comments,followedPosts, fetchComments, createComment }}>
+    <AppContext.Provider value={{ user,token, likeUnlikePost, login, loading, data, currentUser, posts, allposts, comments,followedPosts, fetchComments, createComment }}>
       {children}
     </AppContext.Provider>
   );
