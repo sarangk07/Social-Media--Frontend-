@@ -22,7 +22,9 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .required('Please enter a password')
     .min(8, 'Password must be at least 8 characters')
-    .max(20, 'Password cannot exceed 20 characters'),
+    .max(20, 'Password cannot exceed 20 characters')
+    .matches(/[a-zA-Z]/, 'Password must contain at least one alphabetic character')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Please confirm your password'),
@@ -35,28 +37,28 @@ const[token,setToken]=useState(null);
 
 console.log('resgisterrrrrr.........')
 const handleSubmit = async (values, { resetForm }) => {
-      try{
-          const { name, email, password } = values; 
-          const response = await axios.post('https://social-media-5ukj.onrender.com/auth/register/', {
-          email:email, 
-          password:password, 
-          username:name
-        });
-          console.log('fetch',values)
-          console.log('response stauts',response.status);
-          setToken(response.token);
-          toast.success("Account Created!")
-          resetForm();
+  try{
+      const { name, email, password } = values; 
+      const response = await axios.post('https://social-media-5ukj.onrender.com/auth/register/', {
+      email:email, 
+      password:password, 
+      username:name
+    });
+      console.log('fetch',values)
+      console.log('response stauts',response.status);
+      setToken(response.token);
+      toast.success("Account Created!")
+      resetForm();
 
-        }catch(error){
-          console.log(error,'fetch error')
-          if(error.response.status==409){
-            toast.error("Bad Request. User Already Exist!")
-          }
-          else{
-            toast.error("Error Accured!")
-          }
-        }
+    }catch(error){
+      console.log(error,'fetch error')
+      if(error.response.status==409){
+        toast.error("Bad Request. User Already Exist!")
+      }
+      else{
+        toast.error("Error Accured!")
+      }
+    }
   }
 
   console.log('token',token)
@@ -100,11 +102,6 @@ const handleSubmit = async (values, { resetForm }) => {
           <div className="hidden md:block md:overflow-hidden md:bg-emerald-700 md:z-[0] md:h-full md:right-[0px] md:relative md:w-screen md:ml-28" >
             <img className='h-screen w-full' src="https://i.pinimg.com/originals/c6/2b/10/c62b1000c5ab646e693b5808e9d41335.jpg" alt="" />
           </div>
-
-
-
-
-
   
     <Form action="" className= 'font-mono font-bold absolute md:backdrop-blur-md  md:p-10'>
       <h4 className='flex flex-col items-center font-serif text-balance'>Get Start With <span className='text-emerald-300 text-4xl'> VM</span></h4><br />
@@ -112,15 +109,15 @@ const handleSubmit = async (values, { resetForm }) => {
       <div className='flex '>
 
       <div>
-            <label htmlFor="name">Name</label><br />
-            <Field className='w-36 h-fit rounded-lg dark:text-white text-gray-800 mr-2' type="text" id="name" name="name"  required/><br />
-            <ErrorMessage name="name" component="div" className="error text-xs" /><br />
+          <label htmlFor="name">Name</label><br />
+          <Field className='w-36 h-fit rounded-lg dark:text-white text-gray-800 mr-2' type="text" id="name" name="name"  required/><br />
+          <ErrorMessage name="name" component="div" className="error text-xs" /><br />
       </div>
                 
       <div>
-            <label htmlFor="email">Email</label><br />
-            <Field className='text-gray-800 dark:text-white  rounded-lg w-36 h-fit' type="email" id="email" name="email"   required/><br />
-            <ErrorMessage name="email" component="div" className="error text-xs" /><br />
+          <label htmlFor="email">Email</label><br />
+          <Field className='text-gray-800 dark:text-white  rounded-lg w-36 h-fit' type="email" id="email" name="email"   required/><br />
+          <ErrorMessage name="email" component="div" className="error text-xs" /><br />
       </div>
       </div>  
       <label htmlFor="password">Password</label><br />

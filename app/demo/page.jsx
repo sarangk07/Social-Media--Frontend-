@@ -1,13 +1,17 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import LoadingGIF from '../components/loadingGIF';
+
 
 function Demo() {
   
 
   return (
     <>
-    <LoadingGIF/>
+    <div className='h-[1300px] w-screen bg-zinc-800'>
+    <div>head</div>
+    <div>body</div>
+
+    </div>
     </>
   );
 }

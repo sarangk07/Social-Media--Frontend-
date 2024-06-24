@@ -12,7 +12,7 @@ import PostDeleteBTN from '../components/postDeleteBTN';
 import AppContext from '@/app/context/myContext';
 import { useRouter } from 'next/navigation'; 
 import { Toaster } from 'react-hot-toast';
-
+import ShareButtons from '@/app/components/ShareBTNs';
 
 function Profile() {
   const router = useRouter(); 
@@ -157,10 +157,10 @@ const handleShowFollowing = () => {
 
       <div className='flex justify-around w-screen h-3/4  md:h-4/4 lg:h-5/6  bg-emerald-100 dark:bg-zinc-900 overflow-auto'style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         
-        <div className='hidden  md:flex-col  md:flex w-1/5  bg-[#FFFFFF] m-3 rounded-2xl sm:hidden  dark:bg-zinc-950'>
+        <div className='hidden  md:flex-col h-fit md:flex w-1/5  bg-[#FFFFFF] m-3 rounded-2xl sm:hidden  dark:bg-zinc-950'>
         {fUsers === 'default' ? (
           <>
-            <p>Suggestions</p>
+            <p className='flex justify-center'>Suggestions</p>
             {/* {data?.lusers ? (
               <>
                 {data.lusers.filter((x) => x._id !== id).map((x, index) => (
@@ -207,7 +207,6 @@ const handleShowFollowing = () => {
                   </div>
                   <p className="w-2/5 overflow-hidden md:flex">{user.username}</p>
                   <FollowButton userId={user._id} currentUser={currentUser} />
-              
                   </div>
                 ))}
               </div>
@@ -339,11 +338,13 @@ const handleShowFollowing = () => {
                           </svg>
                           </button>
                           <PostDeleteBTN postId={item._id} />
-                          <button>
+                          <ShareButtons url={`http://localhost:3000//posts/${item._id}`} title={item.desc}/>
+                          
+                          {/* <button>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
                             </svg>
-                          </button>
+                          </button> */}
                         </div>
                         {openCMT === item._id ? (
                           <div>
@@ -378,10 +379,18 @@ const handleShowFollowing = () => {
                                       )
                                     }
                                       <p>{comment.text}</p>
-                                      <div className='flex justify-evenly'>
-                                        <EditCMTButton commentId={comment._id} postId={item._id} />
-                                        <CmtDeleteBTN commentId={comment._id} postId={item._id} />
-                                      </div>
+                                      {
+                                          currentUser._id == comment.userId ?
+                                            <>
+                                              <EditCMTButton commentId={comment._id} postId={item._id} />
+                                              <CmtDeleteBTN commentId={comment._id} postId={item._id} />
+                                            </>
+
+                                              :
+                                            <>
+                                              
+                                            </>
+                                        }
                                     </div>
                                     <hr />
                                   </div>
