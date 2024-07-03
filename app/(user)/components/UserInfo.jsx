@@ -25,13 +25,13 @@ function UserInfo() {
   
 
   //Auth--------------
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-    }
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     router.push('/login');
+  //   }
     
-  }, []);
+  // }, []);
 
 
  

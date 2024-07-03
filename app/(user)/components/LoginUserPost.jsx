@@ -29,15 +29,15 @@ function LoginUserPosts() {
     const [openCMT, setOpenCMT] = useState(false);
     const [createCMT, setCreateCMT] = useState('');
   
-    //Auth--------------
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        router.push('/login');
-      }else{
-        setId(localStorage.getItem('id'))
-      }
-    }, []);
+    // //Auth--------------
+    // useEffect(() => {
+    //   const token = localStorage.getItem('token');
+    //   if (!token) {
+    //     router.push('/login');
+    //   }else{
+    //     setId(localStorage.getItem('id'))
+    //   }
+    // }, []);
   
     
   //comment functionalities-----------------

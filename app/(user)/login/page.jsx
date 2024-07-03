@@ -20,9 +20,6 @@ function Login() {
       type:'x',
       bounds:"#formT"
     })
-
-    
-   
   })
 
 
@@ -89,7 +86,7 @@ function Login() {
        
         <label htmlFor="password">Password</label><br />
         <input className='text-emerald-500 dark:text-white rounded-md -mt-5' type={showPass ? 'text' : 'password'} onChange={(e) => setPassword(e.target.value)} /><br />
-        <a className="bg-slate-600 hover:bg-slate-700 cursor-pointer text-white font-bold p-1 rounded w-[130px] h-[30px]" onClick={showPassword}>
+        <a className=" cursor-pointer text-emerald-100 font-bold p-1 rounded w-[130px] h-[30px] hover:animate-pulse" onClick={showPassword}>
           {showPass ? 'Hide Password' : 'Show Password'}
         </a><br />
   </div>

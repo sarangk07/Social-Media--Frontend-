@@ -31,7 +31,7 @@ function Allpost() {
     const [openCMT, setOpenCMT] = useState(false);
     const [createCMT, setCreateCMT] = useState('');
   
-    //Auth--------------
+    // Auth--------------
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -108,7 +108,13 @@ function Allpost() {
                       
                     </div>
                     <div className='flex justify-center rounded-md relative'>
-                      <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" />
+                      {/* <img className='pl-7 pr-7 w-full  object-cover rounded-3xl' src={item.image} alt="" /> */}
+                      <img
+                          className="pl-7 pr-7 w-full object-cover rounded-3xl"
+                          src={item.image}
+                          alt=""
+                          style={{ maxHeight: '500px' }}
+                        />
                     </div>
                     <div className='flex justify-around mb-5'>
                       <div className='flex '>

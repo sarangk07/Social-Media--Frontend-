@@ -14,19 +14,18 @@ function IntroGSAP() {
     const toRef = useRef(null)
     const vmRef = useRef(null)
     const buttonRef = useRef(null)
-    const earthRef = useRef(null)
-    const marsRef = useRef(null)
-    const neptuneRef = useRef(null)
+    const chatRef = useRef(null)
+    const heartRef = useRef(null)
+    const starRef = useRef(null)
 
     useGSAP(() => {
         const tl = gsap.timeline()
 
         tl.from(welcomeRef.current, {
-            x: -150,
+            y: -200,
             opacity: 0,
-            rotation: -45,
-            duration: 2,
-            ease: 'power3.out',
+            duration: 1,
+            ease: 'bounce.out',
         })
         .from(toRef.current, {
             y: -200,
@@ -35,11 +34,10 @@ function IntroGSAP() {
             ease: 'bounce.out',
         })
         .from(vmRef.current, {
-            x: 150,
+            y: -200,
             opacity: 0,
-            rotation: 45,
             duration: 1,
-            ease: 'power3.out',
+            ease: 'bounce.out',
         }, '-=0.5')
         .to(buttonRef.current, {
             boxShadow: '0px 0px 5px 5px rgba(0, 255, 127, 0.3)',
@@ -53,7 +51,7 @@ function IntroGSAP() {
         const centerX = 0;
         const centerY = 0;
 
-        gsap.to(earthRef.current, {
+        gsap.to(chatRef.current, {
             duration: 8,
             repeat: -1,
             ease: 'linear',
@@ -64,7 +62,7 @@ function IntroGSAP() {
             }
         });
 
-        gsap.to(marsRef.current, {
+        gsap.to(heartRef.current, {
             duration: 12,
             repeat: -1,
             ease: 'linear',
@@ -75,7 +73,7 @@ function IntroGSAP() {
             }
         });
 
-        gsap.to(neptuneRef.current, {
+        gsap.to(starRef.current, {
             duration: 15,
             repeat: -1,
             ease: 'linear',
@@ -105,9 +103,9 @@ function IntroGSAP() {
                 </Link>
                 <br />
             </div>
-            <img ref={earthRef} src="/earth.png" alt="earth" id='earth' className='absolute top-48 w-10 h-10 md:hidden' />
-            <img ref={marsRef} src="/mars.png" alt="mars" className='absolute top-44 w-10 h-10 md:hidden' />
-            <img ref={neptuneRef} src="/neptune.png" alt="neptune" className='absolute top-40 w-10 h-10 md:hidden' />
+            <img ref={chatRef} src="/chat.png" alt="earth" id='earth' className='absolute top-48 w-10 h-10 md:hidden' />
+            <img ref={heartRef} src="/heart.png" alt="mars" className='absolute top-44 w-10 h-10 md:hidden' />
+            <img ref={starRef} src="/star.png" alt="neptune" className='absolute top-40 w-10 h-10 md:hidden' />
         </div>
     )
 }
