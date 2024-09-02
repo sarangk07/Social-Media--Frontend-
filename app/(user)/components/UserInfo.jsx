@@ -24,14 +24,14 @@ function UserInfo() {
 
   
 
-  //Auth--------------
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (!token) {
-  //     router.push('/login');
-  //   }
+  // Auth--------------
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+    }
     
-  // }, []);
+  }, []);
 
 
  

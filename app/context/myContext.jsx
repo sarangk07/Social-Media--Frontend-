@@ -78,7 +78,7 @@ export const AppProvider = ({ children }) => {
 //error handling
   const handleError = (error) => {
     if (!error.response) {
-      toast.error('Network error!');
+      toast.error('Server Error!');
     } else {
       const status = error.response.status;
       if (status === 401) {
