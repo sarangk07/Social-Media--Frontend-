@@ -51,7 +51,7 @@ const handleSubmit = async (values, { resetForm }) => {
       resetForm();
 
     }catch(error){
-      console.log(error,'fetch error')
+      toast.error('No Response From Server! Try again latter')
       if(error.response.status==409){
         toast.error("Bad Request. User Already Exist!")
       }
@@ -92,7 +92,7 @@ const handleSubmit = async (values, { resetForm }) => {
           <img  className='loginimg' src="https://i.pinimg.com/originals/d3/9a/0d/d39a0daf8440e7c1e985f448497c550b.jpg" alt="" />
         </div>
         
-      <div className='w-4/6 h-screen flex flex-row justify-center items-center md:border-solid  ${backgroundImageClass}  md:items-center md:rounded-3xl' >
+      <div className='w-5/6 md:w-3/5  h-screen flex flex-row justify-center items-center md:border-solid  ${backgroundImageClass}  md:items-center md:rounded-3xl' >
           <div className="md:hidden block overflow-hidden bg-zinc-800 z-[0] h-[511px] left-[0px] relative w-screen" />
           <div className="md:hidden block overflow-hidden bg-emerald-700 z-[0] h-[511px] right-[0px] relative top-[15px]  w-screen" />
               
@@ -104,7 +104,7 @@ const handleSubmit = async (values, { resetForm }) => {
           </div>
   
     <Form action="" className= 'font-mono font-bold absolute md:backdrop-blur-md  md:p-10'>
-      <h4 className='flex flex-col items-center font-serif text-balance'>Get Start With <span className='text-emerald-300 text-4xl'> VM</span></h4><br />
+      <h4 className='flex flex-col items-center font-serif text-balance text-white'>Get Start With <span className='text-emerald-300 text-4xl'> VM</span></h4><br />
       <h2 className='text-gray-200'>Create</h2><hr /><br />
       <div className='flex '>
 

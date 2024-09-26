@@ -76,7 +76,7 @@ function Login() {
       </div>
 
 <form onSubmit={handleSubmit} action="" id='formT' className= 'font-playfair font-bold absolute md:backdrop-blur-md  md:p-10'>
-  <h4 className='flex flex-col items-center font-merriweather text-balance '>Get Start With <span className='text-emerald-300 text-4xl'> VM</span></h4><br />
+  <h4 className='flex flex-col items-center font-merriweather text-balance text-white'>Get Start With <span className='text-emerald-300 text-4xl'> VM</span></h4><br />
   <h2 id='logintext' className='text-gray-200'>LogIn</h2><hr /><br />
   <div className='flex '>
     
