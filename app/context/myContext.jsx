@@ -37,7 +37,7 @@ export const AppProvider = ({ children }) => {
       const response = await axios.post('https://social-media-5ukj.onrender.com/auth/login', { email, password });
       if (response.status === 200) {
         setUser({ email });
-        console.log('toookeeeeeeeeeeeeeennnnnnnn',response.data.token);
+        // console.log('toookeeeeeeeeeeeeeennnnnnnn',response.data.token);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('email', email);
         router.push('home');
@@ -127,7 +127,7 @@ export const AppProvider = ({ children }) => {
       if (foundUser) {
         setCurrentUser(foundUser);
         localStorage.setItem('id', foundUser._id);
-        console.log('ccurrrrrrrrrrrenttttttttttt userrrrrrrrrr: ',foundUser);
+        // console.log('ccurrrrrrrrrrrenttttttttttt userrrrrrrrrr: ',foundUser);
       }
     }
   }, [emailid,data.allUsers]);
@@ -141,7 +141,7 @@ export const AppProvider = ({ children }) => {
     const fetchPosts = async () => {
       try {
         const ccid = localStorage.getItem('id');
-        console.log('id:::::::::::::::::::::::::::::::::::::::',ccid);
+        // console.log('id:::::::::::::::::::::::::::::::::::::::',ccid);
         const response = await axios.get(`https://social-media-5ukj.onrender.com/posts/${ccid}/timeline`);
         if(response.data.length < 0){
           setPosts([])
