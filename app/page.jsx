@@ -5,7 +5,7 @@ import IntroGSAP from './components/IntroGSAP';
 export default function Home() {
  
   return (
-    <main className='flex absolute items-center md:top-0 justify-center bg-black w-full h-screen'>
+    <main className='flex absolute items-center md:top-0 justify-center  bg-gradient-to-tr from-black to-cyan-500 w-full h-screen'>
       <IntroGSAP/>
       <br />
       <div 

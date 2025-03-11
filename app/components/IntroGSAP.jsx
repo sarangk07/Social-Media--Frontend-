@@ -10,9 +10,7 @@ import { Draggable } from 'gsap/all'
 gsap.registerPlugin(MotionPathPlugin,Draggable);
 
 function IntroGSAP() {
-    const welcomeRef = useRef(null)
-    const toRef = useRef(null)
-    const vmRef = useRef(null)
+
     const buttonRef = useRef(null)
     const chatRef = useRef(null)
     const heartRef = useRef(null)
@@ -21,25 +19,8 @@ function IntroGSAP() {
     useGSAP(() => {
         const tl = gsap.timeline()
 
-        tl.from(welcomeRef.current, {
-            y: -200,
-            opacity: 0,
-            duration: 1,
-            ease: 'bounce.out',
-        })
-        .from(toRef.current, {
-            y: -200,
-            opacity: 0,
-            duration: 1,
-            ease: 'bounce.out',
-        })
-        .from(vmRef.current, {
-            y: -200,
-            opacity: 0,
-            duration: 1,
-            ease: 'bounce.out',
-        }, '-=0.5')
-        .to(buttonRef.current, {
+        
+        tl.to(buttonRef.current, {
             boxShadow: '0px 0px 5px 5px rgba(0, 255, 127, 0.3)',
             duration: 1,
             repeat: -1,
@@ -90,15 +71,15 @@ function IntroGSAP() {
     }, [])
 
     return (
-        <div className='flex flex-col items-center justify-center h-screen bg-black'>
-            <div className='font-mono text-gray-600 flex flex-col items-center justify-center md:w-2/4'>
-                <h1 ref={welcomeRef}>WE<span className='text-emerald-400'>L</span>COME</h1>
-                <div ref={toRef}>TO</div>
-                <div className='text-2xl w-2/4 items-center flex justify-center font-normal' ref={vmRef}>
-                    <span className='text-emerald-400'>V</span>irtual <span className='text-emerald-400 pl-2'> M</span>ingle
+        <div className='flex flex-col items-center justify-center h-screen'>
+            <div className='font-merriweather font-extrabold text-gray-50  flex flex-col items-center justify-center md:w-2/4'>
+                <h1 >WELCOME</h1>
+                <div >TO</div>
+                <div className='text-md lg:text-xl  w-2/4 items-center flex justify-center font-normal' >
+                   VirtualMingle
                 </div>
                 <br />
-                <Link className='rounded-xl text-center bg-emerald-500 p-2 text-gray-800 no-underline' href="./login" ref={buttonRef}>
+                <Link className='rounded-xl text-center bg-cyan-300 p-2 text-gray-800 no-underline' href="./login" ref={buttonRef}>
                     Get Start
                 </Link>
                 <br />
